@@ -7,7 +7,7 @@
 generator client {
   provider     = "prisma-client"
   output       = "../src/lib/ormClient"
-  moduleFormat = "esm"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -15,15 +15,17 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String     @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean    @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
   sessions      Session[]
   accounts      Account[]
+  cycles        Cycle[]
+  categories    Category[]
 
   @@unique([email])
   @@map("user")
@@ -75,4 +77,51 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Cycle {
+  id        String        @id
+  label     String
+  duration  Int
+  isOver    Boolean       @default(false)
+  userId    String
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  items     Transaction[]
+
+  @@map("cycle")
+}
+
+enum Transaction_T {
+  income
+  expense
+}
+
+model Category {
+  id               String        @id
+  name             String
+  ascii            String
+  transaction_type Transaction_T
+  userId           String
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  cycleItems       Transaction[]
+
+  @@map("category")
+}
+
+model Transaction {
+  id               String         @id
+  quantity         Int
+  cycleId          String?
+  cycle            Cycle?         @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  categoryId       String?
+  category         Category?      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  transaction_type Transaction_T?
+  createdAt        DateTime       @default(now())
+  updateAt         DateTime       @updatedAt
+
+  @@map("transaction")
 }
