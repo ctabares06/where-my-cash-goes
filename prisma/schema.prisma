@@ -80,7 +80,7 @@ model Verification {
 }
 
 model Cycle {
-  id        String        @id
+  id        String        @id @default(uuid())
   label     String
   duration  Int
   isOver    Boolean       @default(false)
@@ -99,9 +99,9 @@ enum Transaction_T {
 }
 
 model Category {
-  id               String        @id
+  id               String        @id @default(uuid())
   name             String
-  ascii            String
+  unicode          String
   transaction_type Transaction_T
   userId           String
   user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -113,7 +113,7 @@ model Category {
 }
 
 model Transaction {
-  id               String         @id
+  id               String         @id @default(uuid())
   quantity         Int
   cycleId          String?
   cycle            Cycle?         @relation(fields: [cycleId], references: [id], onDelete: Cascade)

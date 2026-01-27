@@ -9,7 +9,9 @@
 * 🟢 You can import this file directly.
 */
 
+export const Transaction_T = {
+  income: 'income',
+  expense: 'expense'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type Transaction_T = (typeof Transaction_T)[keyof typeof Transaction_T]

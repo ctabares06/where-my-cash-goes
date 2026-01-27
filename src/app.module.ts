@@ -6,6 +6,7 @@ import { AuthModule } from '@thallesp/nestjs-better-auth';
 import { auth } from './lib/auth';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { UserModule } from './user/user.module';
     }),
     AuthModule.forRoot({ auth, isGlobal: true }),
     UserModule,
+    CategoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
