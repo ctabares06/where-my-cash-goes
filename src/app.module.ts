@@ -8,6 +8,8 @@ import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { CategoriesModule } from './categories/categories.module';
 
+import { TransactionModule } from './transaction/transaction.module';
+
 @Module({
   imports: [
     DatabaseModule,
@@ -17,6 +19,7 @@ import { CategoriesModule } from './categories/categories.module';
     AuthModule.forRoot({ auth, isGlobal: true }),
     UserModule,
     CategoriesModule,
+    TransactionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

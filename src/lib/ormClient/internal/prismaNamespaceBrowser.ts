@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.js'
-export type * from './prismaNamespace.js'
+export type * from '../models'
+export type * from './prismaNamespace'
 
 export const Decimal = runtime.Decimal
 
@@ -163,6 +163,7 @@ export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typ
 export const TransactionScalarFieldEnum = {
   id: 'id',
   quantity: 'quantity',
+  descrition: 'descrition',
   cycleId: 'cycleId',
   categoryId: 'categoryId',
   transaction_type: 'transaction_type',

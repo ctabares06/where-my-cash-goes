@@ -16,10 +16,10 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "../models.js"
-import { type PrismaClient } from "./class.js"
+import type * as Prisma from "../models"
+import { type PrismaClient } from "./class"
 
-export type * from '../models.js'
+export type * from '../models'
 
 export type DMMF = typeof runtime.DMMF
 
@@ -1054,6 +1054,7 @@ export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typ
 export const TransactionScalarFieldEnum = {
   id: 'id',
   quantity: 'quantity',
+  descrition: 'descrition',
   cycleId: 'cycleId',
   categoryId: 'categoryId',
   transaction_type: 'transaction_type',

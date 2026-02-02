@@ -11,7 +11,7 @@ import { CreateCategoryDto } from './categories.dto';
 import { Session, type UserSession } from '@thallesp/nestjs-better-auth';
 import { CategoriesService } from './categories.service';
 
-@Controller('category')
+@Controller('categories')
 export class CategoriesController {
   constructor(private categoryService: CategoriesService) {}
 

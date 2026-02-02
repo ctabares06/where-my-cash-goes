@@ -14,6 +14,18 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
     this.client = new PrismaClient({ adapter });
   }
 
+  category() {
+    return this.client.category;
+  }
+
+  transaction() {
+    return this.client.transaction;
+  }
+
+  cycle() {
+    return this.client.cycle;
+  }
+
   async onModuleInit() {
     await this.client.$connect();
   }

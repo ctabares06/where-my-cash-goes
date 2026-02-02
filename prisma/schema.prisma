@@ -5,9 +5,10 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider     = "prisma-client"
-  output       = "../src/lib/ormClient"
-  moduleFormat = "cjs"
+  provider            = "prisma-client"
+  output              = "../src/lib/ormClient"
+  moduleFormat        = "cjs"
+  importFileExtension = ""
 }
 
 datasource db {
@@ -115,6 +116,7 @@ model Category {
 model Transaction {
   id               String         @id @default(uuid())
   quantity         Int
+  descrition       String
   cycleId          String?
   cycle            Cycle?         @relation(fields: [cycleId], references: [id], onDelete: Cascade)
   categoryId       String?
