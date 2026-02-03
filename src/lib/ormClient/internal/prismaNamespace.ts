@@ -390,7 +390,8 @@ export const ModelName = {
   Verification: 'Verification',
   Cycle: 'Cycle',
   Category: 'Category',
-  Transaction: 'Transaction'
+  Transaction: 'Transaction',
+  Periodic: 'Periodic'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "cycle" | "category" | "transaction"
+    modelProps: "user" | "session" | "account" | "verification" | "cycle" | "category" | "transaction" | "periodic"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -928,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Periodic: {
+      payload: Prisma.$PeriodicPayload<ExtArgs>
+      fields: Prisma.PeriodicFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PeriodicFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodicPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PeriodicFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodicPayload>
+        }
+        findFirst: {
+          args: Prisma.PeriodicFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodicPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PeriodicFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodicPayload>
+        }
+        findMany: {
+          args: Prisma.PeriodicFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodicPayload>[]
+        }
+        create: {
+          args: Prisma.PeriodicCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodicPayload>
+        }
+        createMany: {
+          args: Prisma.PeriodicCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PeriodicCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodicPayload>[]
+        }
+        delete: {
+          args: Prisma.PeriodicDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodicPayload>
+        }
+        update: {
+          args: Prisma.PeriodicUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodicPayload>
+        }
+        deleteMany: {
+          args: Prisma.PeriodicDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PeriodicUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PeriodicUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodicPayload>[]
+        }
+        upsert: {
+          args: Prisma.PeriodicUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PeriodicPayload>
+        }
+        aggregate: {
+          args: Prisma.PeriodicAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePeriodic>
+        }
+        groupBy: {
+          args: Prisma.PeriodicGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PeriodicGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PeriodicCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PeriodicCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1055,6 +1130,7 @@ export const TransactionScalarFieldEnum = {
   id: 'id',
   quantity: 'quantity',
   descrition: 'descrition',
+  userId: 'userId',
   cycleId: 'cycleId',
   categoryId: 'categoryId',
   transaction_type: 'transaction_type',
@@ -1063,6 +1139,17 @@ export const TransactionScalarFieldEnum = {
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+export const PeriodicScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  transactionId: 'transactionId',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
+} as const
+
+export type PeriodicScalarFieldEnum = (typeof PeriodicScalarFieldEnum)[keyof typeof PeriodicScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1273,6 +1360,7 @@ export type GlobalOmitConfig = {
   cycle?: Prisma.CycleOmit
   category?: Prisma.CategoryOmit
   transaction?: Prisma.TransactionOmit
+  periodic?: Prisma.PeriodicOmit
 }
 
 /* Types for Logging */

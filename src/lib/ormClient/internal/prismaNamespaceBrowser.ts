@@ -57,7 +57,8 @@ export const ModelName = {
   Verification: 'Verification',
   Cycle: 'Cycle',
   Category: 'Category',
-  Transaction: 'Transaction'
+  Transaction: 'Transaction',
+  Periodic: 'Periodic'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -164,6 +165,7 @@ export const TransactionScalarFieldEnum = {
   id: 'id',
   quantity: 'quantity',
   descrition: 'descrition',
+  userId: 'userId',
   cycleId: 'cycleId',
   categoryId: 'categoryId',
   transaction_type: 'transaction_type',
@@ -172,6 +174,17 @@ export const TransactionScalarFieldEnum = {
 } as const
 
 export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+export const PeriodicScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  transactionId: 'transactionId',
+  createdAt: 'createdAt',
+  updateAt: 'updateAt'
+} as const
+
+export type PeriodicScalarFieldEnum = (typeof PeriodicScalarFieldEnum)[keyof typeof PeriodicScalarFieldEnum]
 
 
 export const SortOrder = {
