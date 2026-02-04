@@ -1104,7 +1104,7 @@ export const CycleScalarFieldEnum = {
   id: 'id',
   label: 'label',
   duration: 'duration',
-  isOver: 'isOver',
+  isActive: 'isActive',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1143,7 +1143,6 @@ export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[key
 
 export const PeriodicScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   transactionId: 'transactionId',
   createdAt: 'createdAt',
   updateAt: 'updateAt'

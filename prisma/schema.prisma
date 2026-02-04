@@ -28,7 +28,6 @@ model User {
   cycles        Cycle[]
   categories    Category[]
   transactions  Transaction[]
-  periodics     Periodic[]
 
   @@unique([email])
   @@map("user")
@@ -86,7 +85,7 @@ model Cycle {
   id        String        @id @default(uuid())
   label     String
   duration  Int
-  isOver    Boolean       @default(false)
+  isActive  Boolean       @default(false)
   userId    String
   user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime      @default(now())
@@ -137,8 +136,6 @@ model Transaction {
 
 model Periodic {
   id            String      @id @default(uuid())
-  userId        String
-  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactionId String
   transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
   createdAt     DateTime    @default(now())

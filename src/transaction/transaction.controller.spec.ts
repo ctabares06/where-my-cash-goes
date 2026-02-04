@@ -9,6 +9,12 @@ describe('Transactions controller - UT', () => {
   let transactionController: TransactionController;
   let transactionService: TransactionService;
 
+  const mockSession = {
+    user: {
+      id: 'userId',
+    },
+  };
+
   const mockTransactionService = {
     create: jest.fn(),
     findAll: jest.fn(),
@@ -51,10 +57,12 @@ describe('Transactions controller - UT', () => {
       .spyOn(transactionService, 'create')
       .mockResolvedValue(expectedTransaction);
 
-    const transaction =
-      await transactionController.create(createTransactionDto);
+    const transaction = await transactionController.create(
+      createTransactionDto,
+      mockSession as any,
+    );
     expect(transaction).toEqual(expectedTransaction);
-    expect(spyCreate).toHaveBeenCalledWith(createTransactionDto);
+    expect(spyCreate).toHaveBeenCalledWith(createTransactionDto, 'userId');
   });
 
   it('/transactions (GET) - should return all transactions', async () => {
@@ -85,9 +93,9 @@ describe('Transactions controller - UT', () => {
       .spyOn(transactionService, 'findAll')
       .mockResolvedValue(transactions);
 
-    const result = await transactionController.findAll();
+    const result = await transactionController.findAll(mockSession as any);
     expect(result).toEqual(transactions);
-    expect(spyFindAll).toHaveBeenCalled();
+    expect(spyFindAll).toHaveBeenCalledWith('userId');
   });
 
   it('/transactions/:id (GET) - should return a transaction by id', async () => {
@@ -106,9 +114,9 @@ describe('Transactions controller - UT', () => {
       .spyOn(transactionService, 'findOne')
       .mockResolvedValue(transaction);
 
-    const result = await transactionController.findOne('1');
+    const result = await transactionController.findOne('1', mockSession as any);
     expect(result).toEqual(transaction);
-    expect(spyFindOne).toHaveBeenCalledWith('1');
+    expect(spyFindOne).toHaveBeenCalledWith('1', 'userId');
   });
 
   it('/transactions/:id (PATCH) - should update a transaction', async () => {
@@ -134,9 +142,10 @@ describe('Transactions controller - UT', () => {
     const result = await transactionController.update(
       '1',
       updateTransactionDto,
+      mockSession as any,
     );
     expect(result).toEqual(updatedTransaction);
-    expect(spyUpdate).toHaveBeenCalledWith('1', updateTransactionDto);
+    expect(spyUpdate).toHaveBeenCalledWith('1', updateTransactionDto, 'userId');
   });
 
   it('/transactions/:id (DELETE) - should delete a transaction', async () => {
@@ -155,8 +164,8 @@ describe('Transactions controller - UT', () => {
       .spyOn(transactionService, 'remove')
       .mockResolvedValue(deletedTransaction);
 
-    const result = await transactionController.remove('1');
+    const result = await transactionController.remove('1', mockSession as any);
     expect(result).toEqual(deletedTransaction);
-    expect(spyRemove).toHaveBeenCalledWith('1');
+    expect(spyRemove).toHaveBeenCalledWith('1', 'userId');
   });
 });

@@ -26,7 +26,6 @@ export type AggregatePeriodic = {
 
 export type PeriodicMinAggregateOutputType = {
   id: string | null
-  userId: string | null
   transactionId: string | null
   createdAt: Date | null
   updateAt: Date | null
@@ -34,7 +33,6 @@ export type PeriodicMinAggregateOutputType = {
 
 export type PeriodicMaxAggregateOutputType = {
   id: string | null
-  userId: string | null
   transactionId: string | null
   createdAt: Date | null
   updateAt: Date | null
@@ -42,7 +40,6 @@ export type PeriodicMaxAggregateOutputType = {
 
 export type PeriodicCountAggregateOutputType = {
   id: number
-  userId: number
   transactionId: number
   createdAt: number
   updateAt: number
@@ -52,7 +49,6 @@ export type PeriodicCountAggregateOutputType = {
 
 export type PeriodicMinAggregateInputType = {
   id?: true
-  userId?: true
   transactionId?: true
   createdAt?: true
   updateAt?: true
@@ -60,7 +56,6 @@ export type PeriodicMinAggregateInputType = {
 
 export type PeriodicMaxAggregateInputType = {
   id?: true
-  userId?: true
   transactionId?: true
   createdAt?: true
   updateAt?: true
@@ -68,7 +63,6 @@ export type PeriodicMaxAggregateInputType = {
 
 export type PeriodicCountAggregateInputType = {
   id?: true
-  userId?: true
   transactionId?: true
   createdAt?: true
   updateAt?: true
@@ -149,7 +143,6 @@ export type PeriodicGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type PeriodicGroupByOutputType = {
   id: string
-  userId: string
   transactionId: string
   createdAt: Date
   updateAt: Date
@@ -178,21 +171,17 @@ export type PeriodicWhereInput = {
   OR?: Prisma.PeriodicWhereInput[]
   NOT?: Prisma.PeriodicWhereInput | Prisma.PeriodicWhereInput[]
   id?: Prisma.StringFilter<"Periodic"> | string
-  userId?: Prisma.StringFilter<"Periodic"> | string
   transactionId?: Prisma.StringFilter<"Periodic"> | string
   createdAt?: Prisma.DateTimeFilter<"Periodic"> | Date | string
   updateAt?: Prisma.DateTimeFilter<"Periodic"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   transaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
 }
 
 export type PeriodicOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updateAt?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
   transaction?: Prisma.TransactionOrderByWithRelationInput
 }
 
@@ -201,17 +190,14 @@ export type PeriodicWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PeriodicWhereInput | Prisma.PeriodicWhereInput[]
   OR?: Prisma.PeriodicWhereInput[]
   NOT?: Prisma.PeriodicWhereInput | Prisma.PeriodicWhereInput[]
-  userId?: Prisma.StringFilter<"Periodic"> | string
   transactionId?: Prisma.StringFilter<"Periodic"> | string
   createdAt?: Prisma.DateTimeFilter<"Periodic"> | Date | string
   updateAt?: Prisma.DateTimeFilter<"Periodic"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   transaction?: Prisma.XOR<Prisma.TransactionScalarRelationFilter, Prisma.TransactionWhereInput>
 }, "id">
 
 export type PeriodicOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updateAt?: Prisma.SortOrder
@@ -225,7 +211,6 @@ export type PeriodicScalarWhereWithAggregatesInput = {
   OR?: Prisma.PeriodicScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PeriodicScalarWhereWithAggregatesInput | Prisma.PeriodicScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Periodic"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"Periodic"> | string
   transactionId?: Prisma.StringWithAggregatesFilter<"Periodic"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Periodic"> | Date | string
   updateAt?: Prisma.DateTimeWithAggregatesFilter<"Periodic"> | Date | string
@@ -235,13 +220,11 @@ export type PeriodicCreateInput = {
   id?: string
   createdAt?: Date | string
   updateAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPeriodicsInput
   transaction: Prisma.TransactionCreateNestedOneWithoutPeriodicsInput
 }
 
 export type PeriodicUncheckedCreateInput = {
   id?: string
-  userId: string
   transactionId: string
   createdAt?: Date | string
   updateAt?: Date | string
@@ -251,13 +234,11 @@ export type PeriodicUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPeriodicsNestedInput
   transaction?: Prisma.TransactionUpdateOneRequiredWithoutPeriodicsNestedInput
 }
 
 export type PeriodicUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -265,7 +246,6 @@ export type PeriodicUncheckedUpdateInput = {
 
 export type PeriodicCreateManyInput = {
   id?: string
-  userId: string
   transactionId: string
   createdAt?: Date | string
   updateAt?: Date | string
@@ -279,7 +259,6 @@ export type PeriodicUpdateManyMutationInput = {
 
 export type PeriodicUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   transactionId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -297,7 +276,6 @@ export type PeriodicOrderByRelationAggregateInput = {
 
 export type PeriodicCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updateAt?: Prisma.SortOrder
@@ -305,7 +283,6 @@ export type PeriodicCountOrderByAggregateInput = {
 
 export type PeriodicMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updateAt?: Prisma.SortOrder
@@ -313,52 +290,9 @@ export type PeriodicMaxOrderByAggregateInput = {
 
 export type PeriodicMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updateAt?: Prisma.SortOrder
-}
-
-export type PeriodicCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.PeriodicCreateWithoutUserInput, Prisma.PeriodicUncheckedCreateWithoutUserInput> | Prisma.PeriodicCreateWithoutUserInput[] | Prisma.PeriodicUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.PeriodicCreateOrConnectWithoutUserInput | Prisma.PeriodicCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.PeriodicCreateManyUserInputEnvelope
-  connect?: Prisma.PeriodicWhereUniqueInput | Prisma.PeriodicWhereUniqueInput[]
-}
-
-export type PeriodicUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.PeriodicCreateWithoutUserInput, Prisma.PeriodicUncheckedCreateWithoutUserInput> | Prisma.PeriodicCreateWithoutUserInput[] | Prisma.PeriodicUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.PeriodicCreateOrConnectWithoutUserInput | Prisma.PeriodicCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.PeriodicCreateManyUserInputEnvelope
-  connect?: Prisma.PeriodicWhereUniqueInput | Prisma.PeriodicWhereUniqueInput[]
-}
-
-export type PeriodicUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.PeriodicCreateWithoutUserInput, Prisma.PeriodicUncheckedCreateWithoutUserInput> | Prisma.PeriodicCreateWithoutUserInput[] | Prisma.PeriodicUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.PeriodicCreateOrConnectWithoutUserInput | Prisma.PeriodicCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.PeriodicUpsertWithWhereUniqueWithoutUserInput | Prisma.PeriodicUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.PeriodicCreateManyUserInputEnvelope
-  set?: Prisma.PeriodicWhereUniqueInput | Prisma.PeriodicWhereUniqueInput[]
-  disconnect?: Prisma.PeriodicWhereUniqueInput | Prisma.PeriodicWhereUniqueInput[]
-  delete?: Prisma.PeriodicWhereUniqueInput | Prisma.PeriodicWhereUniqueInput[]
-  connect?: Prisma.PeriodicWhereUniqueInput | Prisma.PeriodicWhereUniqueInput[]
-  update?: Prisma.PeriodicUpdateWithWhereUniqueWithoutUserInput | Prisma.PeriodicUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.PeriodicUpdateManyWithWhereWithoutUserInput | Prisma.PeriodicUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.PeriodicScalarWhereInput | Prisma.PeriodicScalarWhereInput[]
-}
-
-export type PeriodicUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.PeriodicCreateWithoutUserInput, Prisma.PeriodicUncheckedCreateWithoutUserInput> | Prisma.PeriodicCreateWithoutUserInput[] | Prisma.PeriodicUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.PeriodicCreateOrConnectWithoutUserInput | Prisma.PeriodicCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.PeriodicUpsertWithWhereUniqueWithoutUserInput | Prisma.PeriodicUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.PeriodicCreateManyUserInputEnvelope
-  set?: Prisma.PeriodicWhereUniqueInput | Prisma.PeriodicWhereUniqueInput[]
-  disconnect?: Prisma.PeriodicWhereUniqueInput | Prisma.PeriodicWhereUniqueInput[]
-  delete?: Prisma.PeriodicWhereUniqueInput | Prisma.PeriodicWhereUniqueInput[]
-  connect?: Prisma.PeriodicWhereUniqueInput | Prisma.PeriodicWhereUniqueInput[]
-  update?: Prisma.PeriodicUpdateWithWhereUniqueWithoutUserInput | Prisma.PeriodicUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.PeriodicUpdateManyWithWhereWithoutUserInput | Prisma.PeriodicUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.PeriodicScalarWhereInput | Prisma.PeriodicScalarWhereInput[]
 }
 
 export type PeriodicCreateNestedManyWithoutTransactionInput = {
@@ -403,67 +337,14 @@ export type PeriodicUncheckedUpdateManyWithoutTransactionNestedInput = {
   deleteMany?: Prisma.PeriodicScalarWhereInput | Prisma.PeriodicScalarWhereInput[]
 }
 
-export type PeriodicCreateWithoutUserInput = {
-  id?: string
-  createdAt?: Date | string
-  updateAt?: Date | string
-  transaction: Prisma.TransactionCreateNestedOneWithoutPeriodicsInput
-}
-
-export type PeriodicUncheckedCreateWithoutUserInput = {
-  id?: string
-  transactionId: string
-  createdAt?: Date | string
-  updateAt?: Date | string
-}
-
-export type PeriodicCreateOrConnectWithoutUserInput = {
-  where: Prisma.PeriodicWhereUniqueInput
-  create: Prisma.XOR<Prisma.PeriodicCreateWithoutUserInput, Prisma.PeriodicUncheckedCreateWithoutUserInput>
-}
-
-export type PeriodicCreateManyUserInputEnvelope = {
-  data: Prisma.PeriodicCreateManyUserInput | Prisma.PeriodicCreateManyUserInput[]
-  skipDuplicates?: boolean
-}
-
-export type PeriodicUpsertWithWhereUniqueWithoutUserInput = {
-  where: Prisma.PeriodicWhereUniqueInput
-  update: Prisma.XOR<Prisma.PeriodicUpdateWithoutUserInput, Prisma.PeriodicUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.PeriodicCreateWithoutUserInput, Prisma.PeriodicUncheckedCreateWithoutUserInput>
-}
-
-export type PeriodicUpdateWithWhereUniqueWithoutUserInput = {
-  where: Prisma.PeriodicWhereUniqueInput
-  data: Prisma.XOR<Prisma.PeriodicUpdateWithoutUserInput, Prisma.PeriodicUncheckedUpdateWithoutUserInput>
-}
-
-export type PeriodicUpdateManyWithWhereWithoutUserInput = {
-  where: Prisma.PeriodicScalarWhereInput
-  data: Prisma.XOR<Prisma.PeriodicUpdateManyMutationInput, Prisma.PeriodicUncheckedUpdateManyWithoutUserInput>
-}
-
-export type PeriodicScalarWhereInput = {
-  AND?: Prisma.PeriodicScalarWhereInput | Prisma.PeriodicScalarWhereInput[]
-  OR?: Prisma.PeriodicScalarWhereInput[]
-  NOT?: Prisma.PeriodicScalarWhereInput | Prisma.PeriodicScalarWhereInput[]
-  id?: Prisma.StringFilter<"Periodic"> | string
-  userId?: Prisma.StringFilter<"Periodic"> | string
-  transactionId?: Prisma.StringFilter<"Periodic"> | string
-  createdAt?: Prisma.DateTimeFilter<"Periodic"> | Date | string
-  updateAt?: Prisma.DateTimeFilter<"Periodic"> | Date | string
-}
-
 export type PeriodicCreateWithoutTransactionInput = {
   id?: string
   createdAt?: Date | string
   updateAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPeriodicsInput
 }
 
 export type PeriodicUncheckedCreateWithoutTransactionInput = {
   id?: string
-  userId: string
   createdAt?: Date | string
   updateAt?: Date | string
 }
@@ -494,37 +375,18 @@ export type PeriodicUpdateManyWithWhereWithoutTransactionInput = {
   data: Prisma.XOR<Prisma.PeriodicUpdateManyMutationInput, Prisma.PeriodicUncheckedUpdateManyWithoutTransactionInput>
 }
 
-export type PeriodicCreateManyUserInput = {
-  id?: string
-  transactionId: string
-  createdAt?: Date | string
-  updateAt?: Date | string
-}
-
-export type PeriodicUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  transaction?: Prisma.TransactionUpdateOneRequiredWithoutPeriodicsNestedInput
-}
-
-export type PeriodicUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type PeriodicUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type PeriodicScalarWhereInput = {
+  AND?: Prisma.PeriodicScalarWhereInput | Prisma.PeriodicScalarWhereInput[]
+  OR?: Prisma.PeriodicScalarWhereInput[]
+  NOT?: Prisma.PeriodicScalarWhereInput | Prisma.PeriodicScalarWhereInput[]
+  id?: Prisma.StringFilter<"Periodic"> | string
+  transactionId?: Prisma.StringFilter<"Periodic"> | string
+  createdAt?: Prisma.DateTimeFilter<"Periodic"> | Date | string
+  updateAt?: Prisma.DateTimeFilter<"Periodic"> | Date | string
 }
 
 export type PeriodicCreateManyTransactionInput = {
   id?: string
-  userId: string
   createdAt?: Date | string
   updateAt?: Date | string
 }
@@ -533,19 +395,16 @@ export type PeriodicUpdateWithoutTransactionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPeriodicsNestedInput
 }
 
 export type PeriodicUncheckedUpdateWithoutTransactionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PeriodicUncheckedUpdateManyWithoutTransactionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updateAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -554,65 +413,53 @@ export type PeriodicUncheckedUpdateManyWithoutTransactionInput = {
 
 export type PeriodicSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
   transactionId?: boolean
   createdAt?: boolean
   updateAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["periodic"]>
 
 export type PeriodicSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
   transactionId?: boolean
   createdAt?: boolean
   updateAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["periodic"]>
 
 export type PeriodicSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
   transactionId?: boolean
   createdAt?: boolean
   updateAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["periodic"]>
 
 export type PeriodicSelectScalar = {
   id?: boolean
-  userId?: boolean
   transactionId?: boolean
   createdAt?: boolean
   updateAt?: boolean
 }
 
-export type PeriodicOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "transactionId" | "createdAt" | "updateAt", ExtArgs["result"]["periodic"]>
+export type PeriodicOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "transactionId" | "createdAt" | "updateAt", ExtArgs["result"]["periodic"]>
 export type PeriodicInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }
 export type PeriodicIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }
 export type PeriodicIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   transaction?: boolean | Prisma.TransactionDefaultArgs<ExtArgs>
 }
 
 export type $PeriodicPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Periodic"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
     transaction: Prisma.$TransactionPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    userId: string
     transactionId: string
     createdAt: Date
     updateAt: Date
@@ -1010,7 +857,6 @@ readonly fields: PeriodicFieldRefs;
  */
 export interface Prisma__PeriodicClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   transaction<T extends Prisma.TransactionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TransactionDefaultArgs<ExtArgs>>): Prisma.Prisma__TransactionClient<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1042,7 +888,6 @@ export interface Prisma__PeriodicClient<T, Null = never, ExtArgs extends runtime
  */
 export interface PeriodicFieldRefs {
   readonly id: Prisma.FieldRef<"Periodic", 'String'>
-  readonly userId: Prisma.FieldRef<"Periodic", 'String'>
   readonly transactionId: Prisma.FieldRef<"Periodic", 'String'>
   readonly createdAt: Prisma.FieldRef<"Periodic", 'DateTime'>
   readonly updateAt: Prisma.FieldRef<"Periodic", 'DateTime'>

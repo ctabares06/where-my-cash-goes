@@ -203,7 +203,6 @@ export type UserWhereInput = {
   cycles?: Prisma.CycleListRelationFilter
   categories?: Prisma.CategoryListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
-  periodics?: Prisma.PeriodicListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -219,7 +218,6 @@ export type UserOrderByWithRelationInput = {
   cycles?: Prisma.CycleOrderByRelationAggregateInput
   categories?: Prisma.CategoryOrderByRelationAggregateInput
   transactions?: Prisma.TransactionOrderByRelationAggregateInput
-  periodics?: Prisma.PeriodicOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -238,7 +236,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   cycles?: Prisma.CycleListRelationFilter
   categories?: Prisma.CategoryListRelationFilter
   transactions?: Prisma.TransactionListRelationFilter
-  periodics?: Prisma.PeriodicListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -280,7 +277,6 @@ export type UserCreateInput = {
   cycles?: Prisma.CycleCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -296,7 +292,6 @@ export type UserUncheckedCreateInput = {
   cycles?: Prisma.CycleUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -312,7 +307,6 @@ export type UserUpdateInput = {
   cycles?: Prisma.CycleUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -328,7 +322,6 @@ export type UserUncheckedUpdateInput = {
   cycles?: Prisma.CycleUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -482,20 +475,6 @@ export type UserUpdateOneRequiredWithoutTransactionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTransactionsInput, Prisma.UserUpdateWithoutTransactionsInput>, Prisma.UserUncheckedUpdateWithoutTransactionsInput>
 }
 
-export type UserCreateNestedOneWithoutPeriodicsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutPeriodicsInput, Prisma.UserUncheckedCreateWithoutPeriodicsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPeriodicsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutPeriodicsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutPeriodicsInput, Prisma.UserUncheckedCreateWithoutPeriodicsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPeriodicsInput
-  upsert?: Prisma.UserUpsertWithoutPeriodicsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPeriodicsInput, Prisma.UserUpdateWithoutPeriodicsInput>, Prisma.UserUncheckedUpdateWithoutPeriodicsInput>
-}
-
 export type UserCreateWithoutSessionsInput = {
   id: string
   name: string
@@ -508,7 +487,6 @@ export type UserCreateWithoutSessionsInput = {
   cycles?: Prisma.CycleCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -523,7 +501,6 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   cycles?: Prisma.CycleUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -554,7 +531,6 @@ export type UserUpdateWithoutSessionsInput = {
   cycles?: Prisma.CycleUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -569,7 +545,6 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   cycles?: Prisma.CycleUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -584,7 +559,6 @@ export type UserCreateWithoutAccountsInput = {
   cycles?: Prisma.CycleCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -599,7 +573,6 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   cycles?: Prisma.CycleUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -630,7 +603,6 @@ export type UserUpdateWithoutAccountsInput = {
   cycles?: Prisma.CycleUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -645,7 +617,6 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   cycles?: Prisma.CycleUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCyclesInput = {
@@ -660,7 +631,6 @@ export type UserCreateWithoutCyclesInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCyclesInput = {
@@ -675,7 +645,6 @@ export type UserUncheckedCreateWithoutCyclesInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCyclesInput = {
@@ -706,7 +675,6 @@ export type UserUpdateWithoutCyclesInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCyclesInput = {
@@ -721,7 +689,6 @@ export type UserUncheckedUpdateWithoutCyclesInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCategoriesInput = {
@@ -736,7 +703,6 @@ export type UserCreateWithoutCategoriesInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   cycles?: Prisma.CycleCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCategoriesInput = {
@@ -751,7 +717,6 @@ export type UserUncheckedCreateWithoutCategoriesInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   cycles?: Prisma.CycleUncheckedCreateNestedManyWithoutUserInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCategoriesInput = {
@@ -782,7 +747,6 @@ export type UserUpdateWithoutCategoriesInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   cycles?: Prisma.CycleUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCategoriesInput = {
@@ -797,7 +761,6 @@ export type UserUncheckedUpdateWithoutCategoriesInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   cycles?: Prisma.CycleUncheckedUpdateManyWithoutUserNestedInput
   transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransactionsInput = {
@@ -812,7 +775,6 @@ export type UserCreateWithoutTransactionsInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   cycles?: Prisma.CycleCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransactionsInput = {
@@ -827,7 +789,6 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   cycles?: Prisma.CycleUncheckedCreateNestedManyWithoutUserInput
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
-  periodics?: Prisma.PeriodicUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransactionsInput = {
@@ -858,7 +819,6 @@ export type UserUpdateWithoutTransactionsInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   cycles?: Prisma.CycleUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransactionsInput = {
@@ -873,83 +833,6 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   cycles?: Prisma.CycleUncheckedUpdateManyWithoutUserNestedInput
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
-  periodics?: Prisma.PeriodicUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutPeriodicsInput = {
-  id: string
-  name: string
-  email: string
-  emailVerified?: boolean
-  image?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  cycles?: Prisma.CycleCreateNestedManyWithoutUserInput
-  categories?: Prisma.CategoryCreateNestedManyWithoutUserInput
-  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutPeriodicsInput = {
-  id: string
-  name: string
-  email: string
-  emailVerified?: boolean
-  image?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  cycles?: Prisma.CycleUncheckedCreateNestedManyWithoutUserInput
-  categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutUserInput
-  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutPeriodicsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutPeriodicsInput, Prisma.UserUncheckedCreateWithoutPeriodicsInput>
-}
-
-export type UserUpsertWithoutPeriodicsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutPeriodicsInput, Prisma.UserUncheckedUpdateWithoutPeriodicsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutPeriodicsInput, Prisma.UserUncheckedCreateWithoutPeriodicsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutPeriodicsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutPeriodicsInput, Prisma.UserUncheckedUpdateWithoutPeriodicsInput>
-}
-
-export type UserUpdateWithoutPeriodicsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  cycles?: Prisma.CycleUpdateManyWithoutUserNestedInput
-  categories?: Prisma.CategoryUpdateManyWithoutUserNestedInput
-  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutPeriodicsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
-  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
-  cycles?: Prisma.CycleUncheckedUpdateManyWithoutUserNestedInput
-  categories?: Prisma.CategoryUncheckedUpdateManyWithoutUserNestedInput
-  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -963,7 +846,6 @@ export type UserCountOutputType = {
   cycles: number
   categories: number
   transactions: number
-  periodics: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -972,7 +854,6 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   cycles?: boolean | UserCountOutputTypeCountCyclesArgs
   categories?: boolean | UserCountOutputTypeCountCategoriesArgs
   transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
-  periodics?: boolean | UserCountOutputTypeCountPeriodicsArgs
 }
 
 /**
@@ -1020,13 +901,6 @@ export type UserCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.TransactionWhereInput
 }
 
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountPeriodicsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PeriodicWhereInput
-}
-
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1041,7 +915,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   cycles?: boolean | Prisma.User$cyclesArgs<ExtArgs>
   categories?: boolean | Prisma.User$categoriesArgs<ExtArgs>
   transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
-  periodics?: boolean | Prisma.User$periodicsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1082,7 +955,6 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   cycles?: boolean | Prisma.User$cyclesArgs<ExtArgs>
   categories?: boolean | Prisma.User$categoriesArgs<ExtArgs>
   transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
-  periodics?: boolean | Prisma.User$periodicsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1096,7 +968,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     cycles: Prisma.$CyclePayload<ExtArgs>[]
     categories: Prisma.$CategoryPayload<ExtArgs>[]
     transactions: Prisma.$TransactionPayload<ExtArgs>[]
-    periodics: Prisma.$PeriodicPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1505,7 +1376,6 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   cycles<T extends Prisma.User$cyclesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cyclesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CyclePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   categories<T extends Prisma.User$categoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$categoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transactions<T extends Prisma.User$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  periodics<T extends Prisma.User$periodicsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$periodicsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PeriodicPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2047,30 +1917,6 @@ export type User$transactionsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[]
-}
-
-/**
- * User.periodics
- */
-export type User$periodicsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Periodic
-   */
-  select?: Prisma.PeriodicSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Periodic
-   */
-  omit?: Prisma.PeriodicOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PeriodicInclude<ExtArgs> | null
-  where?: Prisma.PeriodicWhereInput
-  orderBy?: Prisma.PeriodicOrderByWithRelationInput | Prisma.PeriodicOrderByWithRelationInput[]
-  cursor?: Prisma.PeriodicWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PeriodicScalarFieldEnum | Prisma.PeriodicScalarFieldEnum[]
 }
 
 /**

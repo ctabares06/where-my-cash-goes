@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import { CreateCategoryDto } from './categories.dto';
 import { PrismaClientValidationError } from '@prisma/client/runtime/client';
 

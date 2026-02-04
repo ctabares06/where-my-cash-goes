@@ -9,36 +9,48 @@ import {
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { CreateTransactionDto, UpdateTransactionDto } from './transaction.dto';
+import { Session, type UserSession } from '@thallesp/nestjs-better-auth';
 
 @Controller('transactions')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @Post()
-  create(@Body() createTransactionDto: CreateTransactionDto) {
-    return this.transactionService.create(createTransactionDto);
+  create(
+    @Body() createTransactionDto: CreateTransactionDto,
+    @Session() session: UserSession,
+  ) {
+    return this.transactionService.create(
+      createTransactionDto,
+      session.user.id,
+    );
   }
 
   @Get()
-  findAll() {
-    return this.transactionService.findAll();
+  findAll(@Session() session: UserSession) {
+    return this.transactionService.findAll(session.user.id);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.transactionService.findOne(id);
+  findOne(@Param('id') id: string, @Session() session: UserSession) {
+    return this.transactionService.findOne(id, session.user.id);
   }
 
   @Patch(':id')
   update(
     @Param('id') id: string,
     @Body() updateTransactionDto: UpdateTransactionDto,
+    @Session() session: UserSession,
   ) {
-    return this.transactionService.update(id, updateTransactionDto);
+    return this.transactionService.update(
+      id,
+      updateTransactionDto,
+      session.user.id,
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionService.remove(id);
+  remove(@Param('id') id: string, @Session() session: UserSession) {
+    return this.transactionService.remove(id, session.user.id);
   }
 }

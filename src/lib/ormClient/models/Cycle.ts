@@ -38,7 +38,7 @@ export type CycleMinAggregateOutputType = {
   id: string | null
   label: string | null
   duration: number | null
-  isOver: boolean | null
+  isActive: boolean | null
   userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -48,7 +48,7 @@ export type CycleMaxAggregateOutputType = {
   id: string | null
   label: string | null
   duration: number | null
-  isOver: boolean | null
+  isActive: boolean | null
   userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -58,7 +58,7 @@ export type CycleCountAggregateOutputType = {
   id: number
   label: number
   duration: number
-  isOver: number
+  isActive: number
   userId: number
   createdAt: number
   updatedAt: number
@@ -78,7 +78,7 @@ export type CycleMinAggregateInputType = {
   id?: true
   label?: true
   duration?: true
-  isOver?: true
+  isActive?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -88,7 +88,7 @@ export type CycleMaxAggregateInputType = {
   id?: true
   label?: true
   duration?: true
-  isOver?: true
+  isActive?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -98,7 +98,7 @@ export type CycleCountAggregateInputType = {
   id?: true
   label?: true
   duration?: true
-  isOver?: true
+  isActive?: true
   userId?: true
   createdAt?: true
   updatedAt?: true
@@ -195,7 +195,7 @@ export type CycleGroupByOutputType = {
   id: string
   label: string
   duration: number
-  isOver: boolean
+  isActive: boolean
   userId: string
   createdAt: Date
   updatedAt: Date
@@ -228,7 +228,7 @@ export type CycleWhereInput = {
   id?: Prisma.StringFilter<"Cycle"> | string
   label?: Prisma.StringFilter<"Cycle"> | string
   duration?: Prisma.IntFilter<"Cycle"> | number
-  isOver?: Prisma.BoolFilter<"Cycle"> | boolean
+  isActive?: Prisma.BoolFilter<"Cycle"> | boolean
   userId?: Prisma.StringFilter<"Cycle"> | string
   createdAt?: Prisma.DateTimeFilter<"Cycle"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Cycle"> | Date | string
@@ -240,7 +240,7 @@ export type CycleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   label?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  isOver?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -255,7 +255,7 @@ export type CycleWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CycleWhereInput | Prisma.CycleWhereInput[]
   label?: Prisma.StringFilter<"Cycle"> | string
   duration?: Prisma.IntFilter<"Cycle"> | number
-  isOver?: Prisma.BoolFilter<"Cycle"> | boolean
+  isActive?: Prisma.BoolFilter<"Cycle"> | boolean
   userId?: Prisma.StringFilter<"Cycle"> | string
   createdAt?: Prisma.DateTimeFilter<"Cycle"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Cycle"> | Date | string
@@ -267,7 +267,7 @@ export type CycleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   label?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  isOver?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -285,7 +285,7 @@ export type CycleScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Cycle"> | string
   label?: Prisma.StringWithAggregatesFilter<"Cycle"> | string
   duration?: Prisma.IntWithAggregatesFilter<"Cycle"> | number
-  isOver?: Prisma.BoolWithAggregatesFilter<"Cycle"> | boolean
+  isActive?: Prisma.BoolWithAggregatesFilter<"Cycle"> | boolean
   userId?: Prisma.StringWithAggregatesFilter<"Cycle"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Cycle"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Cycle"> | Date | string
@@ -295,7 +295,7 @@ export type CycleCreateInput = {
   id?: string
   label: string
   duration: number
-  isOver?: boolean
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCyclesInput
@@ -306,7 +306,7 @@ export type CycleUncheckedCreateInput = {
   id?: string
   label: string
   duration: number
-  isOver?: boolean
+  isActive?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -317,7 +317,7 @@ export type CycleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  isOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCyclesNestedInput
@@ -328,7 +328,7 @@ export type CycleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  isOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -339,7 +339,7 @@ export type CycleCreateManyInput = {
   id?: string
   label: string
   duration: number
-  isOver?: boolean
+  isActive?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -349,7 +349,7 @@ export type CycleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  isOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -358,7 +358,7 @@ export type CycleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  isOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -378,7 +378,7 @@ export type CycleCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   label?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  isOver?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -392,7 +392,7 @@ export type CycleMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   label?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  isOver?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -402,7 +402,7 @@ export type CycleMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   label?: Prisma.SortOrder
   duration?: Prisma.SortOrder
-  isOver?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -487,7 +487,7 @@ export type CycleCreateWithoutUserInput = {
   id?: string
   label: string
   duration: number
-  isOver?: boolean
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.TransactionCreateNestedManyWithoutCycleInput
@@ -497,7 +497,7 @@ export type CycleUncheckedCreateWithoutUserInput = {
   id?: string
   label: string
   duration: number
-  isOver?: boolean
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   items?: Prisma.TransactionUncheckedCreateNestedManyWithoutCycleInput
@@ -536,7 +536,7 @@ export type CycleScalarWhereInput = {
   id?: Prisma.StringFilter<"Cycle"> | string
   label?: Prisma.StringFilter<"Cycle"> | string
   duration?: Prisma.IntFilter<"Cycle"> | number
-  isOver?: Prisma.BoolFilter<"Cycle"> | boolean
+  isActive?: Prisma.BoolFilter<"Cycle"> | boolean
   userId?: Prisma.StringFilter<"Cycle"> | string
   createdAt?: Prisma.DateTimeFilter<"Cycle"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Cycle"> | Date | string
@@ -546,7 +546,7 @@ export type CycleCreateWithoutItemsInput = {
   id?: string
   label: string
   duration: number
-  isOver?: boolean
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCyclesInput
@@ -556,7 +556,7 @@ export type CycleUncheckedCreateWithoutItemsInput = {
   id?: string
   label: string
   duration: number
-  isOver?: boolean
+  isActive?: boolean
   userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -582,7 +582,7 @@ export type CycleUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  isOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCyclesNestedInput
@@ -592,7 +592,7 @@ export type CycleUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  isOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -602,7 +602,7 @@ export type CycleCreateManyUserInput = {
   id?: string
   label: string
   duration: number
-  isOver?: boolean
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -611,7 +611,7 @@ export type CycleUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  isOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.TransactionUpdateManyWithoutCycleNestedInput
@@ -621,7 +621,7 @@ export type CycleUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  isOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   items?: Prisma.TransactionUncheckedUpdateManyWithoutCycleNestedInput
@@ -631,7 +631,7 @@ export type CycleUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   duration?: Prisma.IntFieldUpdateOperationsInput | number
-  isOver?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -671,7 +671,7 @@ export type CycleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   label?: boolean
   duration?: boolean
-  isOver?: boolean
+  isActive?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -684,7 +684,7 @@ export type CycleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   label?: boolean
   duration?: boolean
-  isOver?: boolean
+  isActive?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -695,7 +695,7 @@ export type CycleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   label?: boolean
   duration?: boolean
-  isOver?: boolean
+  isActive?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -706,13 +706,13 @@ export type CycleSelectScalar = {
   id?: boolean
   label?: boolean
   duration?: boolean
-  isOver?: boolean
+  isActive?: boolean
   userId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CycleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "label" | "duration" | "isOver" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["cycle"]>
+export type CycleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "label" | "duration" | "isActive" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["cycle"]>
 export type CycleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Cycle$itemsArgs<ExtArgs>
@@ -735,7 +735,7 @@ export type $CyclePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: string
     label: string
     duration: number
-    isOver: boolean
+    isActive: boolean
     userId: string
     createdAt: Date
     updatedAt: Date
@@ -1167,7 +1167,7 @@ export interface CycleFieldRefs {
   readonly id: Prisma.FieldRef<"Cycle", 'String'>
   readonly label: Prisma.FieldRef<"Cycle", 'String'>
   readonly duration: Prisma.FieldRef<"Cycle", 'Int'>
-  readonly isOver: Prisma.FieldRef<"Cycle", 'Boolean'>
+  readonly isActive: Prisma.FieldRef<"Cycle", 'Boolean'>
   readonly userId: Prisma.FieldRef<"Cycle", 'String'>
   readonly createdAt: Prisma.FieldRef<"Cycle", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Cycle", 'DateTime'>
