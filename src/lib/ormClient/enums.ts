@@ -9,6 +9,19 @@
 * 🟢 You can import this file directly.
 */
 
+export const Cycle_T = {
+  daily: 'daily',
+  weekly: 'weekly',
+  monthly: 'monthly',
+  quarterly: 'quarterly',
+  biannual: 'biannual',
+  yearly: 'yearly',
+  customDays: 'customDays'
+} as const
+
+export type Cycle_T = (typeof Cycle_T)[keyof typeof Cycle_T]
+
+
 export const Transaction_T = {
   income: 'income',
   expense: 'expense'

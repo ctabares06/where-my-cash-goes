@@ -6,14 +6,38 @@ import {
 } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { CreateCategoryDto } from './categories.dto';
-import { PrismaClientValidationError } from '@prisma/client/runtime/client';
+import { Prisma } from '../lib/ormClient/client';
 
 @Injectable()
 export class CategoriesService {
   constructor(private db: DatabaseService) {}
 
-  async createCategory(body: CreateCategoryDto, userId: string) {
+  async createCategory(
+    body: CreateCategoryDto | CreateCategoryDto[],
+    userId: string,
+  ) {
     try {
+      if (Array.isArray(body)) {
+        const categories = await this.db.client.category.createMany({
+          data: body.map((category) => ({
+            name: category.name,
+            unicode: category.unicode,
+            transaction_type: category.transaction_type,
+            userId: userId,
+          })),
+        });
+        return await this.db.client.category.findMany({
+          where: {
+            userId: userId,
+          },
+          skip: 0,
+          take: categories.count,
+          orderBy: {
+            createdAt: 'desc',
+          },
+        });
+      }
+
       const category = await this.db.client.category.create({
         data: {
           name: body.name,
@@ -22,9 +46,10 @@ export class CategoriesService {
           userId: userId,
         },
       });
+
       return category;
     } catch (error) {
-      if (error instanceof PrismaClientValidationError) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
         throw new BadRequestException('Invalid data provided');
       }
 

@@ -17,7 +17,7 @@ export class TransactionController {
 
   @Post()
   create(
-    @Body() createTransactionDto: CreateTransactionDto,
+    @Body() createTransactionDto: CreateTransactionDto | CreateTransactionDto[],
     @Session() session: UserSession,
   ) {
     return this.transactionService.create(

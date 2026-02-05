@@ -10,7 +10,7 @@ import {
 import { CreateCategoryDto } from './categories.dto';
 import type { Category } from '../lib/ormClient/client';
 import { Transaction_T } from '../lib/ormClient/enums';
-import { PrismaClientValidationError } from '@prisma/client/runtime/client';
+import { Prisma } from '../lib/ormClient/client';
 
 describe('CategoriesService - UT', () => {
   let service: CategoriesService;
@@ -52,7 +52,7 @@ describe('CategoriesService - UT', () => {
   });
 
   describe('createCategory', () => {
-    it('should create a category successfully', async () => {
+    it('should create a single category successfully', async () => {
       const createCategoryDto: CreateCategoryDto = {
         name: 'Groceries',
         unicode: '🛒',
@@ -76,7 +76,141 @@ describe('CategoriesService - UT', () => {
       });
     });
 
-    it('should throw BadRequestException on PrismaClientValidationError', async () => {
+    it('should create multiple categories in batch', async () => {
+      const createCategoriesDto: CreateCategoryDto[] = [
+        {
+          name: 'Groceries',
+          unicode: '🛒',
+          transaction_type: Transaction_T.expense,
+        },
+        {
+          name: 'Utilities',
+          unicode: '💡',
+          transaction_type: Transaction_T.expense,
+        },
+        {
+          name: 'Salary',
+          unicode: '💰',
+          transaction_type: Transaction_T.income,
+        },
+      ];
+
+      const mockBatchResult = { count: 3 };
+
+      const createdItems: Category[] = [
+        {
+          id: 'c1',
+          name: 'Groceries',
+          unicode: '🛒',
+          transaction_type: Transaction_T.expense,
+          userId: 'userId',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 'c2',
+          name: 'Utilities',
+          unicode: '💡',
+          transaction_type: Transaction_T.expense,
+          userId: 'userId',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 'c3',
+          name: 'Salary',
+          unicode: '💰',
+          transaction_type: Transaction_T.income,
+          userId: 'userId',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ];
+
+      const spyCreateMany = jest
+        .spyOn(dbService.client.category, 'createMany')
+        .mockResolvedValue(mockBatchResult);
+
+      const spyFindMany = jest
+        .spyOn(dbService.client.category, 'findMany')
+        .mockResolvedValue(createdItems);
+
+      const result = (await service.createCategory(
+        createCategoriesDto,
+        'userId',
+      )) as Category[];
+
+      expect(result).toEqual(createdItems);
+      expect(result).toHaveLength(3);
+      expect(spyCreateMany).toHaveBeenCalledWith({
+        data: [
+          {
+            name: 'Groceries',
+            unicode: '🛒',
+            transaction_type: Transaction_T.expense,
+            userId: 'userId',
+          },
+          {
+            name: 'Utilities',
+            unicode: '💡',
+            transaction_type: Transaction_T.expense,
+            userId: 'userId',
+          },
+          {
+            name: 'Salary',
+            unicode: '💰',
+            transaction_type: Transaction_T.income,
+            userId: 'userId',
+          },
+        ],
+      });
+      expect(spyFindMany).toHaveBeenCalledWith({
+        where: {
+          userId: 'userId',
+        },
+        skip: 0,
+        take: mockBatchResult.count,
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+    });
+
+    it('should handle empty batch creation', async () => {
+      const createCategoriesDto: CreateCategoryDto[] = [];
+
+      const mockBatchResult = { count: 0 };
+      const createdItems: Category[] = [];
+
+      const spyCreateMany = jest
+        .spyOn(dbService.client.category, 'createMany')
+        .mockResolvedValue(mockBatchResult);
+
+      const spyFindMany = jest
+        .spyOn(dbService.client.category, 'findMany')
+        .mockResolvedValue(createdItems);
+
+      const result = (await service.createCategory(
+        createCategoriesDto,
+        'userId',
+      )) as Category[];
+
+      expect(result).toEqual([]);
+      expect(result).toHaveLength(0);
+      expect(spyCreateMany).toHaveBeenCalled();
+      expect(spyFindMany).toHaveBeenCalledWith({
+        where: {
+          userId: 'userId',
+        },
+        skip: 0,
+        take: mockBatchResult.count,
+        orderBy: {
+          createdAt: 'desc',
+        },
+      });
+    });
+
+    it('should throw BadRequestException on Prisma for single creation', async () => {
       const createCategoryDto: CreateCategoryDto = {
         name: 'Invalid',
         unicode: '🛒',
@@ -84,13 +218,35 @@ describe('CategoriesService - UT', () => {
       };
 
       jest.spyOn(dbService.client.category, 'create').mockRejectedValue(
-        new PrismaClientValidationError('Invalid data', {
-          clientVersion: 'si',
+        new Prisma.PrismaClientKnownRequestError('Invalid data', {
+          clientVersion: '1.0.0',
+          code: 'P2000',
         }),
       );
 
       await expect(
         service.createCategory(createCategoryDto, 'userId'),
+      ).rejects.toThrow(BadRequestException);
+    });
+
+    it('should throw BadRequestException on Prisma for batch creation', async () => {
+      const createCategoriesDto: CreateCategoryDto[] = [
+        {
+          name: 'Invalid',
+          unicode: '🛒',
+          transaction_type: Transaction_T.expense,
+        },
+      ];
+
+      jest.spyOn(dbService.client.category, 'createMany').mockRejectedValue(
+        new Prisma.PrismaClientKnownRequestError('Invalid data', {
+          clientVersion: '1.0.0',
+          code: 'P2000',
+        }),
+      );
+
+      await expect(
+        service.createCategory(createCategoriesDto, 'userId'),
       ).rejects.toThrow(BadRequestException);
     });
 
@@ -112,7 +268,7 @@ describe('CategoriesService - UT', () => {
   });
 
   describe('getCategoriesByUser', () => {
-    it('should return all categories for a user', async () => {
+    it('should return all categories for a user without pagination', async () => {
       const categories: Category[] = [
         mockCategory,
         {
@@ -138,6 +294,95 @@ describe('CategoriesService - UT', () => {
         where: {
           userId: 'userId',
         },
+        skip: 0,
+        take: undefined,
+      });
+    });
+
+    it('should return categories for a user with pagination on first page', async () => {
+      const categories: Category[] = [mockCategory];
+
+      const spy = jest
+        .spyOn(dbService.client.category, 'findMany')
+        .mockResolvedValue(categories);
+
+      const result = await service.getCategoriesByUser('userId', 1, 10);
+
+      expect(result).toEqual(categories);
+      expect(result).toHaveLength(1);
+      expect(spy).toHaveBeenCalledWith({
+        where: {
+          userId: 'userId',
+        },
+        skip: 0,
+        take: 10,
+      });
+    });
+
+    it('should return categories for a user with pagination on second page', async () => {
+      const categories: Category[] = [
+        {
+          id: 'categoryId2',
+          name: 'Utilities',
+          unicode: '💡',
+          transaction_type: Transaction_T.expense,
+          userId: 'userId',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ];
+
+      const spy = jest
+        .spyOn(dbService.client.category, 'findMany')
+        .mockResolvedValue(categories);
+
+      const result = await service.getCategoriesByUser('userId', 2, 10);
+
+      expect(result).toHaveLength(1);
+      expect(spy).toHaveBeenCalledWith({
+        where: {
+          userId: 'userId',
+        },
+        skip: 10,
+        take: 10,
+      });
+    });
+
+    it('should return categories with custom limit', async () => {
+      const categories: Category[] = [mockCategory];
+
+      const spy = jest
+        .spyOn(dbService.client.category, 'findMany')
+        .mockResolvedValue(categories);
+
+      const result = await service.getCategoriesByUser('userId', 1, 5);
+
+      expect(result).toHaveLength(1);
+      expect(spy).toHaveBeenCalledWith({
+        where: {
+          userId: 'userId',
+        },
+        skip: 0,
+        take: 5,
+      });
+    });
+
+    it('should calculate correct skip value for pagination', async () => {
+      const categories: Category[] = [];
+
+      const spy = jest
+        .spyOn(dbService.client.category, 'findMany')
+        .mockResolvedValue(categories);
+
+      // Page 5 with limit 20 should skip 80 records
+      await service.getCategoriesByUser('userId', 5, 20);
+
+      expect(spy).toHaveBeenCalledWith({
+        where: {
+          userId: 'userId',
+        },
+        skip: 80,
+        take: 20,
       });
     });
 
@@ -154,6 +399,26 @@ describe('CategoriesService - UT', () => {
         where: {
           userId: 'userId',
         },
+        skip: 0,
+        take: undefined,
+      });
+    });
+
+    it('should return empty array when pagination results in no matches', async () => {
+      const spy = jest
+        .spyOn(dbService.client.category, 'findMany')
+        .mockResolvedValue([]);
+
+      const result = await service.getCategoriesByUser('userId', 10, 10);
+
+      expect(result).toEqual([]);
+      expect(result).toHaveLength(0);
+      expect(spy).toHaveBeenCalledWith({
+        where: {
+          userId: 'userId',
+        },
+        skip: 90,
+        take: 10,
       });
     });
   });

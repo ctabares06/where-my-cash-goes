@@ -1,24 +1,32 @@
-import { IsInt, IsOptional, IsString, IsEnum } from 'class-validator';
+import {
+  IsInt,
+  IsOptional,
+  IsString,
+  IsEnum,
+  IsUUID,
+  ValidateIf,
+} from 'class-validator';
 import { Transaction_T } from '../lib/ormClient/enums';
+import { Transaction } from 'src/lib/ormClient/client';
 
-export class CreateTransactionDto {
+export class CreateTransactionDto implements Partial<Transaction> {
   @IsInt()
-  quantity: number;
+  quantity!: number;
 
   @IsString()
-  descrition: string;
-
-  @IsOptional()
-  @IsString()
-  cycleId?: string;
+  description!: string;
 
   @IsOptional()
-  @IsString()
+  @IsUUID(4)
   categoryId?: string;
 
   @IsOptional()
+  @IsUUID(4, { each: true })
+  tags?: string[];
+
+  @ValidateIf((object: CreateTransactionDto) => object.categoryId !== undefined)
   @IsEnum(Transaction_T)
-  transaction_type: Transaction_T | null;
+  transaction_type?: Transaction_T | null;
 }
 
 export class UpdateTransactionDto {
@@ -28,17 +36,17 @@ export class UpdateTransactionDto {
 
   @IsOptional()
   @IsString()
-  descrition?: string;
+  description?: string;
 
   @IsOptional()
-  @IsString()
-  cycleId?: string;
-
-  @IsOptional()
-  @IsString()
+  @IsUUID()
   categoryId?: string;
 
   @IsOptional()
+  @IsUUID(4, { each: true })
+  tags?: string[];
+
+  @ValidateIf((object: CreateTransactionDto) => object.categoryId !== undefined)
   @IsEnum(Transaction_T)
   transaction_type?: Transaction_T;
 }

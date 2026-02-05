@@ -55,10 +55,11 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
-  Cycle: 'Cycle',
   Category: 'Category',
   Transaction: 'Transaction',
-  Periodic: 'Periodic'
+  Periodic: 'Periodic',
+  Tags: 'Tags',
+  TagsOnTransactions: 'TagsOnTransactions'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -135,19 +136,6 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
-export const CycleScalarFieldEnum = {
-  id: 'id',
-  label: 'label',
-  duration: 'duration',
-  isActive: 'isActive',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CycleScalarFieldEnum = (typeof CycleScalarFieldEnum)[keyof typeof CycleScalarFieldEnum]
-
-
 export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -164,9 +152,8 @@ export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typ
 export const TransactionScalarFieldEnum = {
   id: 'id',
   quantity: 'quantity',
-  descrition: 'descrition',
+  description: 'description',
   userId: 'userId',
-  cycleId: 'cycleId',
   categoryId: 'categoryId',
   transaction_type: 'transaction_type',
   createdAt: 'createdAt',
@@ -184,6 +171,25 @@ export const PeriodicScalarFieldEnum = {
 } as const
 
 export type PeriodicScalarFieldEnum = (typeof PeriodicScalarFieldEnum)[keyof typeof PeriodicScalarFieldEnum]
+
+
+export const TagsScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TagsScalarFieldEnum = (typeof TagsScalarFieldEnum)[keyof typeof TagsScalarFieldEnum]
+
+
+export const TagsOnTransactionsScalarFieldEnum = {
+  tagId: 'tagId',
+  transactionId: 'transactionId'
+} as const
+
+export type TagsOnTransactionsScalarFieldEnum = (typeof TagsOnTransactionsScalarFieldEnum)[keyof typeof TagsOnTransactionsScalarFieldEnum]
 
 
 export const SortOrder = {

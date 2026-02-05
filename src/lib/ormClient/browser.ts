@@ -38,11 +38,6 @@ export type Account = Prisma.AccountModel
  */
 export type Verification = Prisma.VerificationModel
 /**
- * Model Cycle
- * 
- */
-export type Cycle = Prisma.CycleModel
-/**
  * Model Category
  * 
  */
@@ -57,3 +52,13 @@ export type Transaction = Prisma.TransactionModel
  * 
  */
 export type Periodic = Prisma.PeriodicModel
+/**
+ * Model Tags
+ * 
+ */
+export type Tags = Prisma.TagsModel
+/**
+ * Model TagsOnTransactions
+ * 
+ */
+export type TagsOnTransactions = Prisma.TagsOnTransactionsModel

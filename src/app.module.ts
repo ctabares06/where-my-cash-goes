@@ -7,7 +7,7 @@ import { auth } from './lib/auth';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { CategoriesModule } from './categories/categories.module';
-import { CyclesModule } from './cycles/cycles.module';
+import { TagsModule } from './tags/tags.module';
 
 import { TransactionModule } from './transaction/transaction.module';
 
@@ -20,7 +20,7 @@ import { TransactionModule } from './transaction/transaction.module';
     AuthModule.forRoot({ auth, isGlobal: true }),
     UserModule,
     CategoriesModule,
-    CyclesModule,
+    TagsModule,
     TransactionModule,
   ],
   controllers: [AppController],

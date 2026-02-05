@@ -25,9 +25,9 @@ model User {
   updatedAt     DateTime      @updatedAt
   sessions      Session[]
   accounts      Account[]
-  cycles        Cycle[]
   categories    Category[]
   transactions  Transaction[]
+  tags          Tags[]
 
   @@unique([email])
   @@map("user")
@@ -81,18 +81,14 @@ model Verification {
   @@map("verification")
 }
 
-model Cycle {
-  id        String        @id @default(uuid())
-  label     String
-  duration  Int
-  isActive  Boolean       @default(false)
-  userId    String
-  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  items     Transaction[]
-
-  @@map("cycle")
+enum Cycle_T {
+  daily
+  weekly
+  monthly
+  quarterly
+  biannual
+  yearly
+  customDays
 }
 
 enum Transaction_T {
@@ -109,28 +105,26 @@ model Category {
   user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
-  cycleItems       Transaction[]
+  transactions     Transaction[]
 
   @@map("category")
 }
 
 model Transaction {
-  id               String         @id @default(uuid())
-  quantity         Int
-  descrition       String
-  userId           String
-  user             User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  cycleId          String?
-  cycle            Cycle?         @relation(fields: [cycleId], references: [id], onDelete: Cascade)
-  categoryId       String?
-  category         Category?      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  transaction_type Transaction_T?
-  createdAt        DateTime       @default(now())
-  updateAt         DateTime       @updatedAt
-  periodics        Periodic[]
+  id                 String               @id @default(uuid())
+  quantity           Int
+  description        String
+  userId             String
+  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId         String?
+  category           Category?            @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  transaction_type   Transaction_T?
+  createdAt          DateTime             @default(now())
+  updateAt           DateTime             @updatedAt
+  periodics          Periodic[]
+  tagsOnTransactions TagsOnTransactions[]
 
   @@index([userId])
-  @@index([cycleId])
   @@map("transaction")
 }
 
@@ -142,4 +136,26 @@ model Periodic {
   updateAt      DateTime    @updatedAt
 
   @@map("periodic")
+}
+
+model Tags {
+  id                 String               @id @default(uuid())
+  name               String
+  userId             String
+  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  tagsOnTransactions TagsOnTransactions[]
+
+  @@map("tags")
+}
+
+model TagsOnTransactions {
+  tagId         String
+  transactionId String
+  tag           Tags        @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  @@id([tagId, transactionId])
+  @@map("tags_on_transactions")
 }

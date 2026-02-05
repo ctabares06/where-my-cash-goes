@@ -43,11 +43,10 @@ describe('TransactionService - UT', () => {
         id: 'transactionId',
         userId: 'userId',
         quantity: 100,
-        descrition: 'Test transaction',
+        description: 'Test transaction',
         transaction_type: Transaction_T.income,
         createdAt: new Date(),
         updateAt: new Date(),
-        cycleId: null,
         categoryId: null,
       };
       const spy = jest
@@ -71,11 +70,10 @@ describe('TransactionService - UT', () => {
         id: 'transactionId',
         userId: 'otherUserId',
         quantity: 100,
-        descrition: 'Test transaction',
+        description: 'Test transaction',
         transaction_type: Transaction_T.income,
         createdAt: new Date(),
         updateAt: new Date(),
-        cycleId: null,
         categoryId: null,
       };
       const spy = jest
@@ -115,7 +113,7 @@ describe('TransactionService - UT', () => {
   it('should create a transaction', async () => {
     const createTransactionDto = {
       quantity: 100,
-      descrition: 'Test transaction',
+      description: 'Test transaction',
       transaction_type: Transaction_T.income,
     };
     const expectedTransaction: Transaction = {
@@ -124,7 +122,6 @@ describe('TransactionService - UT', () => {
       userId: 'userId',
       createdAt: new Date(),
       updateAt: new Date(),
-      cycleId: null,
       categoryId: null,
     };
 
@@ -150,23 +147,21 @@ describe('TransactionService - UT', () => {
       {
         id: '1',
         quantity: 100,
-        descrition: 'Test transaction 1',
+        description: 'Test transaction 1',
         transaction_type: Transaction_T.income,
         userId: 'userId',
         createdAt: new Date(),
         updateAt: new Date(),
-        cycleId: null,
         categoryId: null,
       },
       {
         id: '2',
         quantity: 200,
-        descrition: 'Test transaction 2',
+        description: 'Test transaction 2',
         transaction_type: Transaction_T.expense,
         userId: 'userId',
         createdAt: new Date(),
         updateAt: new Date(),
-        cycleId: null,
         categoryId: null,
       },
     ];
@@ -188,12 +183,11 @@ describe('TransactionService - UT', () => {
     const transaction: Transaction = {
       id: '1',
       quantity: 100,
-      descrition: 'Test transaction',
+      description: 'Test transaction',
       transaction_type: Transaction_T.income,
       userId: 'userId',
       createdAt: new Date(),
       updateAt: new Date(),
-      cycleId: null,
       categoryId: null,
     };
 
@@ -229,22 +223,20 @@ describe('TransactionService - UT', () => {
       id: '1',
       userId: 'userId',
       quantity: 100,
-      descrition: 'Test transaction',
+      description: 'Test transaction',
       transaction_type: Transaction_T.income,
       createdAt: new Date(),
       updateAt: new Date(),
-      cycleId: null,
       categoryId: null,
     };
     const updatedTransaction: Transaction = {
       id: '1',
       quantity: 150,
-      descrition: 'Updated transaction',
+      description: 'Updated transaction',
       transaction_type: Transaction_T.income,
       userId: 'userId',
       createdAt: new Date(),
       updateAt: new Date(),
-      cycleId: null,
       categoryId: null,
     };
 
@@ -282,22 +274,20 @@ describe('TransactionService - UT', () => {
       id: '1',
       userId: 'userId',
       quantity: 100,
-      descrition: 'Test transaction',
+      description: 'Test transaction',
       transaction_type: Transaction_T.income,
       createdAt: new Date(),
       updateAt: new Date(),
-      cycleId: null,
       categoryId: null,
     };
     const deletedTransaction: Transaction = {
       id: '1',
       quantity: 100,
-      descrition: 'Test transaction',
+      description: 'Test transaction',
       transaction_type: Transaction_T.income,
       userId: 'userId',
       createdAt: new Date(),
       updateAt: new Date(),
-      cycleId: null,
       categoryId: null,
     };
 
