@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { CreateCategoryDto } from './categories.dto';
 import { Session, type UserSession } from '@thallesp/nestjs-better-auth';
@@ -28,9 +29,15 @@ export class CategoriesController {
   }
 
   @Get()
-  async getCategories(@Session() session: UserSession) {
+  async getCategories(
+    @Session() session: UserSession,
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+  ) {
     const categories = await this.categoryService.getCategoriesByUser(
       session.user.id,
+      page,
+      limit,
     );
     return categories;
   }

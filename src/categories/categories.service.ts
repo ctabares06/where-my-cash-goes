@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { CreateCategoryDto } from './categories.dto';
 import { PrismaClientValidationError } from '@prisma/client/runtime/client';
@@ -6,24 +11,6 @@ import { PrismaClientValidationError } from '@prisma/client/runtime/client';
 @Injectable()
 export class CategoriesService {
   constructor(private db: DatabaseService) {}
-
-  async belongsToUser(userId: string, categoryId: string) {
-    if (!userId || !categoryId) {
-      return false;
-    }
-
-    const category = await this.db.client.category.findFirst({
-      where: {
-        id: categoryId,
-      },
-    });
-
-    if (category?.userId === userId) {
-      return category;
-    }
-
-    return null;
-  }
 
   async createCategory(body: CreateCategoryDto, userId: string) {
     try {
@@ -38,27 +25,31 @@ export class CategoriesService {
       return category;
     } catch (error) {
       if (error instanceof PrismaClientValidationError) {
-        throw error;
+        throw new BadRequestException('Invalid data provided');
       }
 
-      throw new Error('Category creation failed');
+      throw new InternalServerErrorException('Category creation failed');
     }
   }
 
-  async getCategoriesByUser(userId: string) {
+  async getCategoriesByUser(userId: string, page?: number, limit?: number) {
     const categories = await this.db.client.category.findMany({
       where: {
         userId: userId,
       },
+      skip: page && limit ? (page - 1) * limit : 0,
+      take: limit || undefined,
     });
     return categories;
   }
 
   async getCategoryById(categoryId: string, userId: string) {
-    const category = await this.belongsToUser(userId, categoryId);
+    const category = await this.db.client.category.findFirst({
+      where: { id: categoryId, userId: userId },
+    });
 
     if (!category) {
-      throw new Error('Unauthorized');
+      throw new NotFoundException('Category not found');
     }
 
     return category;
@@ -69,31 +60,35 @@ export class CategoriesService {
     userId: string,
     body: Partial<CreateCategoryDto>,
   ) {
-    const oldCategory = await this.belongsToUser(userId, categoryId);
+    const category = await this.db.client.category.findFirst({
+      where: { id: categoryId, userId: userId },
+    });
 
-    if (!oldCategory) {
-      throw new Error('Unauthorized');
+    if (!category) {
+      throw new NotFoundException('Category not found');
     }
 
-    const category = await this.db.client.category.update({
+    const updatedCategory = await this.db.client.category.update({
       where: {
-        id: categoryId,
+        id: category.id,
       },
       data: body,
     });
-    return category;
+    return updatedCategory;
   }
 
   async deleteCategory(categoryId: string, userId: string) {
-    const category = await this.belongsToUser(userId, categoryId);
+    const category = await this.db.client.category.findFirst({
+      where: { id: categoryId, userId: userId },
+    });
 
     if (!category) {
-      throw new Error('Unauthorized');
+      throw new NotFoundException('Category not found');
     }
 
     return await this.db.client.category.delete({
       where: {
-        id: categoryId,
+        id: category.id,
       },
     });
   }

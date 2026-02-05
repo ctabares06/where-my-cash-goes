@@ -39,8 +39,18 @@ describe('TransactionService - UT', () => {
     });
 
     it('should return transaction if it belongs to user', async () => {
-      const mockTransaction = { id: 'transactionId', userId: 'userId' };
-      jest
+      const mockTransaction: Transaction = {
+        id: 'transactionId',
+        userId: 'userId',
+        quantity: 100,
+        descrition: 'Test transaction',
+        transaction_type: Transaction_T.income,
+        createdAt: new Date(),
+        updateAt: new Date(),
+        cycleId: null,
+        categoryId: null,
+      };
+      const spy = jest
         .spyOn(dbService.client.transaction, 'findFirst')
         .mockResolvedValue(mockTransaction);
 
@@ -49,7 +59,7 @@ describe('TransactionService - UT', () => {
         'transactionId',
       );
       expect(result).toBe(mockTransaction);
-      expect(dbService.client.transaction.findFirst).toHaveBeenCalledWith({
+      expect(spy).toHaveBeenCalledWith({
         where: {
           id: 'transactionId',
         },
@@ -57,8 +67,18 @@ describe('TransactionService - UT', () => {
     });
 
     it('should return null if transaction does not belong to user', async () => {
-      const mockTransaction = { id: 'transactionId', userId: 'otherUserId' };
-      jest
+      const mockTransaction: Transaction = {
+        id: 'transactionId',
+        userId: 'otherUserId',
+        quantity: 100,
+        descrition: 'Test transaction',
+        transaction_type: Transaction_T.income,
+        createdAt: new Date(),
+        updateAt: new Date(),
+        cycleId: null,
+        categoryId: null,
+      };
+      const spy = jest
         .spyOn(dbService.client.transaction, 'findFirst')
         .mockResolvedValue(mockTransaction);
 
@@ -67,10 +87,15 @@ describe('TransactionService - UT', () => {
         'transactionId',
       );
       expect(result).toBe(null);
+      expect(spy).toHaveBeenCalledWith({
+        where: {
+          id: 'transactionId',
+        },
+      });
     });
 
     it('should return null if transaction not found', async () => {
-      jest
+      const spy = jest
         .spyOn(dbService.client.transaction, 'findFirst')
         .mockResolvedValue(null);
 
@@ -79,6 +104,11 @@ describe('TransactionService - UT', () => {
         'transactionId',
       );
       expect(result).toBe(null);
+      expect(spy).toHaveBeenCalledWith({
+        where: {
+          id: 'transactionId',
+        },
+      });
     });
   });
 
@@ -96,13 +126,9 @@ describe('TransactionService - UT', () => {
       updateAt: new Date(),
       cycleId: null,
       categoryId: null,
-      cycle: null,
-      category: null,
-      periodics: [],
-      user: {} as any, // mock
     };
 
-    const spyDbService = jest
+    const spy = jest
       .spyOn(dbService.client.transaction, 'create')
       .mockResolvedValue(expectedTransaction);
 
@@ -111,7 +137,7 @@ describe('TransactionService - UT', () => {
       'userId',
     );
     expect(result).toEqual(expectedTransaction);
-    expect(spyDbService).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       data: {
         ...createTransactionDto,
         userId: 'userId',
@@ -120,7 +146,7 @@ describe('TransactionService - UT', () => {
   });
 
   it('should find all transactions', async () => {
-    const transactions = [
+    const transactions: Transaction[] = [
       {
         id: '1',
         quantity: 100,
@@ -131,10 +157,6 @@ describe('TransactionService - UT', () => {
         updateAt: new Date(),
         cycleId: null,
         categoryId: null,
-        cycle: null,
-        category: null,
-        periodics: [],
-        user: {} as any,
       },
       {
         id: '2',
@@ -146,20 +168,16 @@ describe('TransactionService - UT', () => {
         updateAt: new Date(),
         cycleId: null,
         categoryId: null,
-        cycle: null,
-        category: null,
-        periodics: [],
-        user: {} as any,
       },
     ];
 
-    const spyDbService = jest
+    const spy = jest
       .spyOn(dbService.client.transaction, 'findMany')
       .mockResolvedValue(transactions);
 
     const result = await transactionService.findAll('userId');
     expect(result).toEqual(transactions);
-    expect(spyDbService).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       where: {
         userId: 'userId',
       },
@@ -167,7 +185,7 @@ describe('TransactionService - UT', () => {
   });
 
   it('should find one transaction by id', async () => {
-    const transaction = {
+    const transaction: Transaction = {
       id: '1',
       quantity: 100,
       descrition: 'Test transaction',
@@ -177,19 +195,15 @@ describe('TransactionService - UT', () => {
       updateAt: new Date(),
       cycleId: null,
       categoryId: null,
-      cycle: null,
-      category: null,
-      periodics: [],
-      user: {} as any,
     };
 
-    const spyDbService = jest
+    const spy = jest
       .spyOn(dbService.client.transaction, 'findFirst')
       .mockResolvedValue(transaction);
 
     const result = await transactionService.findOne('1', 'userId');
     expect(result).toEqual(transaction);
-    expect(spyDbService).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       where: {
         id: '1',
       },
@@ -211,7 +225,7 @@ describe('TransactionService - UT', () => {
       quantity: 150,
       descrition: 'Updated transaction',
     };
-    const existingTransaction = {
+    const existingTransaction: Transaction = {
       id: '1',
       userId: 'userId',
       quantity: 100,
@@ -221,12 +235,8 @@ describe('TransactionService - UT', () => {
       updateAt: new Date(),
       cycleId: null,
       categoryId: null,
-      cycle: null,
-      category: null,
-      periodics: [],
-      user: {} as any,
     };
-    const updatedTransaction = {
+    const updatedTransaction: Transaction = {
       id: '1',
       quantity: 150,
       descrition: 'Updated transaction',
@@ -236,16 +246,12 @@ describe('TransactionService - UT', () => {
       updateAt: new Date(),
       cycleId: null,
       categoryId: null,
-      cycle: null,
-      category: null,
-      periodics: [],
-      user: {} as any,
     };
 
     jest
       .spyOn(dbService.client.transaction, 'findFirst')
       .mockResolvedValue(existingTransaction);
-    const spyDbService = jest
+    const spy = jest
       .spyOn(dbService.client.transaction, 'update')
       .mockResolvedValue(updatedTransaction);
 
@@ -255,7 +261,7 @@ describe('TransactionService - UT', () => {
       'userId',
     );
     expect(result).toEqual(updatedTransaction);
-    expect(spyDbService).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       where: { id: '1' },
       data: updateTransactionDto,
     });
@@ -272,7 +278,7 @@ describe('TransactionService - UT', () => {
   });
 
   it('should remove a transaction', async () => {
-    const existingTransaction = {
+    const existingTransaction: Transaction = {
       id: '1',
       userId: 'userId',
       quantity: 100,
@@ -282,12 +288,8 @@ describe('TransactionService - UT', () => {
       updateAt: new Date(),
       cycleId: null,
       categoryId: null,
-      cycle: null,
-      category: null,
-      periodics: [],
-      user: {} as any,
     };
-    const deletedTransaction = {
+    const deletedTransaction: Transaction = {
       id: '1',
       quantity: 100,
       descrition: 'Test transaction',
@@ -297,22 +299,18 @@ describe('TransactionService - UT', () => {
       updateAt: new Date(),
       cycleId: null,
       categoryId: null,
-      cycle: null,
-      category: null,
-      periodics: [],
-      user: {} as any,
     };
 
     jest
       .spyOn(dbService.client.transaction, 'findFirst')
       .mockResolvedValue(existingTransaction);
-    const spyDbService = jest
+    const spy = jest
       .spyOn(dbService.client.transaction, 'delete')
       .mockResolvedValue(deletedTransaction);
 
     const result = await transactionService.remove('1', 'userId');
     expect(result).toEqual(deletedTransaction);
-    expect(spyDbService).toHaveBeenCalledWith({
+    expect(spy).toHaveBeenCalledWith({
       where: { id: '1' },
     });
   });

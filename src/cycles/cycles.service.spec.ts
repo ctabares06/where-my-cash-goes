@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CyclesService } from './cycles.service';
 import { DatabaseService } from '../database/database.service';
 import { createMockContext } from '../../test/prisma.mock';
+import type { Cycle } from '../lib/ormClient/client';
 
 describe('CyclesService', () => {
   let service: CyclesService;
@@ -42,14 +43,22 @@ describe('CyclesService', () => {
     });
 
     it('should return cycle if it belongs to user', async () => {
-      const mockCycle = { id: 'cycleId', userId: 'userId' };
-      jest
+      const mockCycle: Cycle = {
+        id: 'cycleId',
+        userId: 'userId',
+        label: 'Test Cycle',
+        duration: 30,
+        isActive: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      const spy = jest
         .spyOn(dbService.client.cycle, 'findFirst')
         .mockResolvedValue(mockCycle);
 
       const result = await service.belongsToUser('userId', 'cycleId');
       expect(result).toBe(mockCycle);
-      expect(dbService.client.cycle.findFirst).toHaveBeenCalledWith({
+      expect(spy).toHaveBeenCalledWith({
         where: {
           id: 'cycleId',
         },
@@ -57,26 +66,46 @@ describe('CyclesService', () => {
     });
 
     it('should return null if cycle does not belong to user', async () => {
-      const mockCycle = { id: 'cycleId', userId: 'otherUserId' };
-      jest
+      const mockCycle: Cycle = {
+        id: 'cycleId',
+        userId: 'otherUserId',
+        label: 'Test Cycle',
+        duration: 30,
+        isActive: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+      const spy = jest
         .spyOn(dbService.client.cycle, 'findFirst')
         .mockResolvedValue(mockCycle);
 
       const result = await service.belongsToUser('userId', 'cycleId');
       expect(result).toBe(null);
+      expect(spy).toHaveBeenCalledWith({
+        where: {
+          id: 'cycleId',
+        },
+      });
     });
 
     it('should return null if cycle not found', async () => {
-      jest.spyOn(dbService.client.cycle, 'findFirst').mockResolvedValue(null);
+      const spy = jest
+        .spyOn(dbService.client.cycle, 'findFirst')
+        .mockResolvedValue(null);
 
       const result = await service.belongsToUser('userId', 'cycleId');
       expect(result).toBe(null);
+      expect(spy).toHaveBeenCalledWith({
+        where: {
+          id: 'cycleId',
+        },
+      });
     });
   });
 
   describe('createCycle', () => {
     it('should create a cycle successfully', async () => {
-      const mockCycle = {
+      const mockCycle: Cycle = {
         id: 'cycleId',
         label: 'Test Cycle',
         duration: 30,
@@ -85,14 +114,16 @@ describe('CyclesService', () => {
         createdAt: new Date(),
         updatedAt: new Date(),
       };
-      jest.spyOn(dbService.client.cycle, 'create').mockResolvedValue(mockCycle);
+      const spy = jest
+        .spyOn(dbService.client.cycle, 'create')
+        .mockResolvedValue(mockCycle);
 
       const result = await service.createCycle(
         { label: 'Test Cycle', duration: 30 },
         'userId',
       );
       expect(result).toBe(mockCycle);
-      expect(dbService.client.cycle.create).toHaveBeenCalledWith({
+      expect(spy).toHaveBeenCalledWith({
         data: {
           label: 'Test Cycle',
           duration: 30,
@@ -103,7 +134,7 @@ describe('CyclesService', () => {
     });
 
     it('should create a cycle with isActive true when specified', async () => {
-      const mockCycle = {
+      const mockCycle: Cycle = {
         id: 'cycleId',
         label: 'Test Cycle',
         duration: 30,
@@ -112,14 +143,16 @@ describe('CyclesService', () => {
         createdAt: new Date(),
         updatedAt: new Date(),
       };
-      jest.spyOn(dbService.client.cycle, 'create').mockResolvedValue(mockCycle);
+      const spy = jest
+        .spyOn(dbService.client.cycle, 'create')
+        .mockResolvedValue(mockCycle);
 
       const result = await service.createCycle(
         { label: 'Test Cycle', duration: 30, isActive: true },
         'userId',
       );
       expect(result).toBe(mockCycle);
-      expect(dbService.client.cycle.create).toHaveBeenCalledWith({
+      expect(spy).toHaveBeenCalledWith({
         data: {
           label: 'Test Cycle',
           duration: 30,
@@ -142,25 +175,24 @@ describe('CyclesService', () => {
 
   describe('getCyclesByUser', () => {
     it('should return cycles for user with items included', async () => {
-      const mockCycles = [
+      const mockCycles: Cycle[] = [
         {
           id: 'cycleId',
           userId: 'userId',
           label: 'Test Cycle',
           duration: 30,
           isActive: false,
-          items: [],
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       ];
-      jest
+      const spy = jest
         .spyOn(dbService.client.cycle, 'findMany')
         .mockResolvedValue(mockCycles);
 
       const result = await service.getCyclesByUser('userId');
       expect(result).toBe(mockCycles);
-      expect(dbService.client.cycle.findMany).toHaveBeenCalledWith({
+      expect(spy).toHaveBeenCalledWith({
         where: {
           userId: 'userId',
         },
@@ -180,26 +212,25 @@ describe('CyclesService', () => {
 
   describe('getCycleById', () => {
     it('should return cycle with items if authorized', async () => {
-      const mockCycle = {
+      const mockCycle: Cycle = {
         id: 'cycleId',
         userId: 'userId',
         label: 'Test Cycle',
         duration: 30,
         isActive: false,
-        items: [],
         createdAt: new Date(),
         updatedAt: new Date(),
       };
       jest
         .spyOn(dbService.client.cycle, 'findFirst')
         .mockResolvedValue(mockCycle);
-      jest
+      const spy = jest
         .spyOn(dbService.client.cycle, 'findUnique')
         .mockResolvedValue(mockCycle);
 
       const result = await service.getCycleById('cycleId', 'userId');
       expect(result).toBe(mockCycle);
-      expect(dbService.client.cycle.findUnique).toHaveBeenCalledWith({
+      expect(spy).toHaveBeenCalledWith({
         where: {
           id: 'cycleId',
         },
@@ -220,14 +251,16 @@ describe('CyclesService', () => {
 
   describe('updateCycle', () => {
     it('should update cycle if authorized', async () => {
-      const existingCycle = {
+      const existingCycle: Cycle = {
         id: 'cycleId',
         userId: 'userId',
         label: 'Old Label',
         duration: 30,
         isActive: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
-      const updatedCycle = {
+      const updatedCycle: Cycle = {
         id: 'cycleId',
         userId: 'userId',
         label: 'Updated Label',
@@ -240,7 +273,7 @@ describe('CyclesService', () => {
       jest
         .spyOn(dbService.client.cycle, 'findFirst')
         .mockResolvedValue(existingCycle);
-      jest
+      const spy = jest
         .spyOn(dbService.client.cycle, 'update')
         .mockResolvedValue(updatedCycle);
 
@@ -248,7 +281,7 @@ describe('CyclesService', () => {
         label: 'Updated Label',
       });
       expect(result).toBe(updatedCycle);
-      expect(dbService.client.cycle.update).toHaveBeenCalledWith({
+      expect(spy).toHaveBeenCalledWith({
         where: {
           id: 'cycleId',
         },
@@ -267,7 +300,7 @@ describe('CyclesService', () => {
 
   describe('deleteCycle', () => {
     it('should delete cycle if authorized', async () => {
-      const mockCycle = {
+      const mockCycle: Cycle = {
         id: 'cycleId',
         userId: 'userId',
         label: 'Test Cycle',
@@ -279,11 +312,13 @@ describe('CyclesService', () => {
       jest
         .spyOn(dbService.client.cycle, 'findFirst')
         .mockResolvedValue(mockCycle);
-      jest.spyOn(dbService.client.cycle, 'delete').mockResolvedValue(mockCycle);
+      const spy = jest
+        .spyOn(dbService.client.cycle, 'delete')
+        .mockResolvedValue(mockCycle);
 
       const result = await service.deleteCycle('cycleId', 'userId');
       expect(result).toBe(mockCycle);
-      expect(dbService.client.cycle.delete).toHaveBeenCalledWith({
+      expect(spy).toHaveBeenCalledWith({
         where: {
           id: 'cycleId',
         },
