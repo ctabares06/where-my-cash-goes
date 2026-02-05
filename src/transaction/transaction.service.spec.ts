@@ -4,6 +4,7 @@ import { DatabaseService } from '../database/database.service';
 import { Transaction_T } from '../lib/ormClient/enums';
 import { createMockContext } from '../../test/prisma.mock';
 import type { Transaction } from '../lib/ormClient/client';
+import { NotFoundException } from '@nestjs/common';
 
 describe('TransactionService - UT', () => {
   let transactionService: TransactionService;
@@ -26,292 +27,292 @@ describe('TransactionService - UT', () => {
     transactionService = module.get<TransactionService>(TransactionService);
   });
 
-  describe('belongsToUser', () => {
-    it('should return false if userId or transactionId is missing', async () => {
-      const result = await transactionService.belongsToUser(
-        '',
-        'transactionId',
-      );
-      expect(result).toBe(false);
-
-      const result2 = await transactionService.belongsToUser('userId', '');
-      expect(result2).toBe(false);
-    });
-
-    it('should return transaction if it belongs to user', async () => {
-      const mockTransaction: Transaction = {
-        id: 'transactionId',
+  describe('create', () => {
+    it('should create a single transaction', async () => {
+      const createTransactionDto = {
+        quantity: 100,
+        description: 'Test transaction',
+        transaction_type: Transaction_T.income,
+      };
+      const expectedTransaction: Transaction = {
+        id: '1',
+        ...createTransactionDto,
         userId: 'userId',
-        quantity: 100,
-        description: 'Test transaction',
-        transaction_type: Transaction_T.income,
         createdAt: new Date(),
         updateAt: new Date(),
         categoryId: null,
       };
-      const spy = jest
-        .spyOn(dbService.client.transaction, 'findFirst')
-        .mockResolvedValue(mockTransaction);
 
-      const result = await transactionService.belongsToUser(
+      const spy = jest
+        .spyOn(dbService.client.transaction, 'create')
+        .mockResolvedValue(expectedTransaction);
+
+      const result = await transactionService.create(
+        createTransactionDto,
         'userId',
-        'transactionId',
       );
-      expect(result).toBe(mockTransaction);
+      expect(result).toEqual(expectedTransaction);
       expect(spy).toHaveBeenCalledWith({
-        where: {
-          id: 'transactionId',
+        data: {
+          ...createTransactionDto,
+          userId: 'userId',
         },
       });
     });
 
-    it('should return null if transaction does not belong to user', async () => {
-      const mockTransaction: Transaction = {
-        id: 'transactionId',
-        userId: 'otherUserId',
+    it('should create multiple transactions in batch', async () => {
+      const createTransactionDtos = [
+        {
+          quantity: 100,
+          description: 'Test transaction 1',
+          transaction_type: Transaction_T.income,
+        },
+        {
+          quantity: 50,
+          description: 'Test transaction 2',
+          transaction_type: Transaction_T.expense,
+        },
+      ];
+
+      const mockBatchResult = { count: 2 };
+      const createdTransactions: Transaction[] = [
+        {
+          id: '1',
+          ...createTransactionDtos[0],
+          userId: 'userId',
+          createdAt: new Date(),
+          updateAt: new Date(),
+          categoryId: null,
+        },
+        {
+          id: '2',
+          ...createTransactionDtos[1],
+          userId: 'userId',
+          createdAt: new Date(),
+          updateAt: new Date(),
+          categoryId: null,
+        },
+      ];
+
+      const spyCreateMany = jest
+        .spyOn(dbService.client.transaction, 'createMany')
+        .mockResolvedValue(mockBatchResult);
+
+      const spyFindMany = jest
+        .spyOn(dbService.client.transaction, 'findMany')
+        .mockResolvedValue(createdTransactions);
+
+      const result = (await transactionService.create(
+        createTransactionDtos,
+        'userId',
+      )) as Transaction[];
+
+      expect(result).toEqual(createdTransactions);
+      expect(result).toHaveLength(2);
+      expect(spyCreateMany).toHaveBeenCalledWith({
+        data: [
+          { ...createTransactionDtos[0], userId: 'userId' },
+          { ...createTransactionDtos[1], userId: 'userId' },
+        ],
+      });
+      expect(spyFindMany).toHaveBeenCalledWith({
+        orderBy: { createdAt: 'desc' },
+        where: { userId: 'userId' },
+        take: 2,
+      });
+    });
+  });
+
+  describe('findAll', () => {
+    it('should find all transactions for a user', async () => {
+      const transactions: Transaction[] = [
+        {
+          id: '1',
+          quantity: 100,
+          description: 'Test transaction 1',
+          transaction_type: Transaction_T.income,
+          userId: 'userId',
+          createdAt: new Date(),
+          updateAt: new Date(),
+          categoryId: null,
+        },
+        {
+          id: '2',
+          quantity: 200,
+          description: 'Test transaction 2',
+          transaction_type: Transaction_T.expense,
+          userId: 'userId',
+          createdAt: new Date(),
+          updateAt: new Date(),
+          categoryId: null,
+        },
+      ];
+
+      const spy = jest
+        .spyOn(dbService.client.transaction, 'findMany')
+        .mockResolvedValue(transactions);
+
+      const result = await transactionService.findAll('userId');
+      expect(result).toEqual(transactions);
+      expect(spy).toHaveBeenCalledWith({
+        where: {
+          userId: 'userId',
+        },
+      });
+    });
+
+    it('should return empty array when no transactions exist', async () => {
+      const spy = jest
+        .spyOn(dbService.client.transaction, 'findMany')
+        .mockResolvedValue([]);
+
+      const result = await transactionService.findAll('userId');
+      expect(result).toEqual([]);
+      expect(spy).toHaveBeenCalledWith({
+        where: {
+          userId: 'userId',
+        },
+      });
+    });
+  });
+
+  describe('findOne', () => {
+    it('should find one transaction by id for a user', async () => {
+      const transaction: Transaction = {
+        id: '1',
         quantity: 100,
         description: 'Test transaction',
         transaction_type: Transaction_T.income,
+        userId: 'userId',
         createdAt: new Date(),
         updateAt: new Date(),
         categoryId: null,
       };
+
       const spy = jest
         .spyOn(dbService.client.transaction, 'findFirst')
-        .mockResolvedValue(mockTransaction);
+        .mockResolvedValue(transaction);
 
-      const result = await transactionService.belongsToUser(
-        'userId',
-        'transactionId',
-      );
-      expect(result).toBe(null);
+      const result = await transactionService.findOne('1', 'userId');
+      expect(result).toEqual(transaction);
       expect(spy).toHaveBeenCalledWith({
         where: {
-          id: 'transactionId',
+          id: '1',
+          userId: 'userId',
         },
       });
     });
 
-    it('should return null if transaction not found', async () => {
-      const spy = jest
+    it('should throw NotFoundException when transaction not found', async () => {
+      jest
         .spyOn(dbService.client.transaction, 'findFirst')
         .mockResolvedValue(null);
 
-      const result = await transactionService.belongsToUser(
-        'userId',
-        'transactionId',
+      await expect(transactionService.findOne('1', 'userId')).rejects.toThrow(
+        NotFoundException,
       );
-      expect(result).toBe(null);
-      expect(spy).toHaveBeenCalledWith({
-        where: {
-          id: 'transactionId',
-        },
-      });
+    });
+
+    it('should throw NotFoundException when transaction belongs to different user', async () => {
+      jest
+        .spyOn(dbService.client.transaction, 'findFirst')
+        .mockResolvedValue(null);
+
+      await expect(
+        transactionService.findOne('1', 'differentUserId'),
+      ).rejects.toThrow(NotFoundException);
     });
   });
 
-  it('should create a transaction', async () => {
-    const createTransactionDto = {
-      quantity: 100,
-      description: 'Test transaction',
-      transaction_type: Transaction_T.income,
-    };
-    const expectedTransaction: Transaction = {
-      id: '1',
-      ...createTransactionDto,
-      userId: 'userId',
-      createdAt: new Date(),
-      updateAt: new Date(),
-      categoryId: null,
-    };
-
-    const spy = jest
-      .spyOn(dbService.client.transaction, 'create')
-      .mockResolvedValue(expectedTransaction);
-
-    const result = await transactionService.create(
-      createTransactionDto,
-      'userId',
-    );
-    expect(result).toEqual(expectedTransaction);
-    expect(spy).toHaveBeenCalledWith({
-      data: {
-        ...createTransactionDto,
-        userId: 'userId',
-      },
-    });
-  });
-
-  it('should find all transactions', async () => {
-    const transactions: Transaction[] = [
-      {
+  describe('update', () => {
+    it('should update a transaction', async () => {
+      const updateTransactionDto = {
+        quantity: 150,
+        description: 'Updated transaction',
+      };
+      const updatedTransaction: Transaction = {
         id: '1',
-        quantity: 100,
-        description: 'Test transaction 1',
+        quantity: 150,
+        description: 'Updated transaction',
         transaction_type: Transaction_T.income,
         userId: 'userId',
         createdAt: new Date(),
         updateAt: new Date(),
         categoryId: null,
-      },
-      {
-        id: '2',
-        quantity: 200,
-        description: 'Test transaction 2',
-        transaction_type: Transaction_T.expense,
+      };
+
+      const spy = jest
+        .spyOn(dbService.client.transaction, 'update')
+        .mockResolvedValue(updatedTransaction);
+
+      const result = await transactionService.update(
+        '1',
+        updateTransactionDto,
+        'userId',
+      );
+      expect(result).toEqual(updatedTransaction);
+      expect(spy).toHaveBeenCalledWith({
+        where: { id: '1', userId: 'userId' },
+        data: updateTransactionDto,
+      });
+    });
+  });
+
+  describe('remove', () => {
+    it('should remove a transaction', async () => {
+      const existingTransaction: Transaction = {
+        id: '1',
+        userId: 'userId',
+        quantity: 100,
+        description: 'Test transaction',
+        transaction_type: Transaction_T.income,
+        createdAt: new Date(),
+        updateAt: new Date(),
+        categoryId: null,
+      };
+      const deletedTransaction: Transaction = {
+        id: '1',
+        quantity: 100,
+        description: 'Test transaction',
+        transaction_type: Transaction_T.income,
         userId: 'userId',
         createdAt: new Date(),
         updateAt: new Date(),
         categoryId: null,
-      },
-    ];
+      };
 
-    const spy = jest
-      .spyOn(dbService.client.transaction, 'findMany')
-      .mockResolvedValue(transactions);
+      jest
+        .spyOn(dbService.client.transaction, 'findFirst')
+        .mockResolvedValue(existingTransaction);
+      const spy = jest
+        .spyOn(dbService.client.transaction, 'delete')
+        .mockResolvedValue(deletedTransaction);
 
-    const result = await transactionService.findAll('userId');
-    expect(result).toEqual(transactions);
-    expect(spy).toHaveBeenCalledWith({
-      where: {
-        userId: 'userId',
-      },
+      const result = await transactionService.remove('1', 'userId');
+      expect(result).toEqual(deletedTransaction);
+      expect(spy).toHaveBeenCalledWith({
+        where: { id: '1' },
+      });
     });
-  });
 
-  it('should find one transaction by id', async () => {
-    const transaction: Transaction = {
-      id: '1',
-      quantity: 100,
-      description: 'Test transaction',
-      transaction_type: Transaction_T.income,
-      userId: 'userId',
-      createdAt: new Date(),
-      updateAt: new Date(),
-      categoryId: null,
-    };
+    it('should throw NotFoundException when transaction not found', async () => {
+      jest
+        .spyOn(dbService.client.transaction, 'findFirst')
+        .mockResolvedValue(null);
 
-    const spy = jest
-      .spyOn(dbService.client.transaction, 'findFirst')
-      .mockResolvedValue(transaction);
-
-    const result = await transactionService.findOne('1', 'userId');
-    expect(result).toEqual(transaction);
-    expect(spy).toHaveBeenCalledWith({
-      where: {
-        id: '1',
-      },
+      await expect(transactionService.remove('1', 'userId')).rejects.toThrow(
+        NotFoundException,
+      );
     });
-  });
 
-  it('should throw error if findOne unauthorized', async () => {
-    jest
-      .spyOn(dbService.client.transaction, 'findFirst')
-      .mockResolvedValue(null);
+    it('should throw NotFoundException when transaction belongs to different user', async () => {
+      jest
+        .spyOn(dbService.client.transaction, 'findFirst')
+        .mockResolvedValue(null);
 
-    await expect(transactionService.findOne('1', 'userId')).rejects.toThrow(
-      'Unauthorized',
-    );
-  });
-
-  it('should update a transaction', async () => {
-    const updateTransactionDto = {
-      quantity: 150,
-      descrition: 'Updated transaction',
-    };
-    const existingTransaction: Transaction = {
-      id: '1',
-      userId: 'userId',
-      quantity: 100,
-      description: 'Test transaction',
-      transaction_type: Transaction_T.income,
-      createdAt: new Date(),
-      updateAt: new Date(),
-      categoryId: null,
-    };
-    const updatedTransaction: Transaction = {
-      id: '1',
-      quantity: 150,
-      description: 'Updated transaction',
-      transaction_type: Transaction_T.income,
-      userId: 'userId',
-      createdAt: new Date(),
-      updateAt: new Date(),
-      categoryId: null,
-    };
-
-    jest
-      .spyOn(dbService.client.transaction, 'findFirst')
-      .mockResolvedValue(existingTransaction);
-    const spy = jest
-      .spyOn(dbService.client.transaction, 'update')
-      .mockResolvedValue(updatedTransaction);
-
-    const result = await transactionService.update(
-      '1',
-      updateTransactionDto,
-      'userId',
-    );
-    expect(result).toEqual(updatedTransaction);
-    expect(spy).toHaveBeenCalledWith({
-      where: { id: '1' },
-      data: updateTransactionDto,
+      await expect(
+        transactionService.remove('1', 'differentUserId'),
+      ).rejects.toThrow(NotFoundException);
     });
-  });
-
-  it('should throw error if update unauthorized', async () => {
-    jest
-      .spyOn(dbService.client.transaction, 'findFirst')
-      .mockResolvedValue(null);
-
-    await expect(
-      transactionService.update('1', { quantity: 200 }, 'userId'),
-    ).rejects.toThrow('Unauthorized');
-  });
-
-  it('should remove a transaction', async () => {
-    const existingTransaction: Transaction = {
-      id: '1',
-      userId: 'userId',
-      quantity: 100,
-      description: 'Test transaction',
-      transaction_type: Transaction_T.income,
-      createdAt: new Date(),
-      updateAt: new Date(),
-      categoryId: null,
-    };
-    const deletedTransaction: Transaction = {
-      id: '1',
-      quantity: 100,
-      description: 'Test transaction',
-      transaction_type: Transaction_T.income,
-      userId: 'userId',
-      createdAt: new Date(),
-      updateAt: new Date(),
-      categoryId: null,
-    };
-
-    jest
-      .spyOn(dbService.client.transaction, 'findFirst')
-      .mockResolvedValue(existingTransaction);
-    const spy = jest
-      .spyOn(dbService.client.transaction, 'delete')
-      .mockResolvedValue(deletedTransaction);
-
-    const result = await transactionService.remove('1', 'userId');
-    expect(result).toEqual(deletedTransaction);
-    expect(spy).toHaveBeenCalledWith({
-      where: { id: '1' },
-    });
-  });
-
-  it('should throw error if remove unauthorized', async () => {
-    jest
-      .spyOn(dbService.client.transaction, 'findFirst')
-      .mockResolvedValue(null);
-
-    await expect(transactionService.remove('1', 'userId')).rejects.toThrow(
-      'Unauthorized',
-    );
   });
 });

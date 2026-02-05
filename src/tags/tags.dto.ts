@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class CreateTagDto {
+export class CreateAndUpdateTagDto {
   @IsString()
-  name: string;
+  name!: string;
 }

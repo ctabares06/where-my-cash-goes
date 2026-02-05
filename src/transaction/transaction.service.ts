@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreateTransactionDto, UpdateTransactionDto } from './transaction.dto';
 import { DatabaseService } from '../database/database.service';
-import { Prisma } from 'src/lib/ormClient/client';
+import { Prisma } from '../lib/ormClient/client';
 
 @Injectable()
 export class TransactionService {

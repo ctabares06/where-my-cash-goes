@@ -5,14 +5,17 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
-import { CreateTagDto } from './tags.dto';
+import { CreateAndUpdateTagDto } from './tags.dto';
 import { Prisma } from '../lib/ormClient/client';
 
 @Injectable()
 export class TagsService {
   constructor(private db: DatabaseService) {}
 
-  async createTag(body: CreateTagDto | CreateTagDto[], userId: string) {
+  async createTag(
+    body: CreateAndUpdateTagDto | CreateAndUpdateTagDto[],
+    userId: string,
+  ) {
     try {
       if (Array.isArray(body)) {
         const createdTags = await this.db.client.tags.createMany({
@@ -35,7 +38,6 @@ export class TagsService {
       return tag;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        console.error(error);
         throw new BadRequestException('Invalid data provided');
       }
       throw new InternalServerErrorException('Tag creation failed');
@@ -58,7 +60,11 @@ export class TagsService {
     return tag;
   }
 
-  async updateTag(tagId: string, userId: string, body: Partial<CreateTagDto>) {
+  async updateTag(
+    tagId: string,
+    userId: string,
+    body: Partial<CreateAndUpdateTagDto>,
+  ) {
     try {
       const tag = await this.db.client.tags.update({
         where: { id: tagId, userId },

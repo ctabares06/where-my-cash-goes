@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TagsService } from './tags.service';
 import { DatabaseService } from '../database/database.service';
 import { createMockContext } from '../../test/prisma.mock';
-import { CreateTagDto } from './tags.dto';
+import { CreateAndUpdateTagDto } from './tags.dto';
 import { Tags, Prisma } from '../lib/ormClient/client';
 
 describe('TagsService', () => {
@@ -41,7 +41,7 @@ describe('TagsService', () => {
   });
 
   it('should create a tag', async () => {
-    const dto: CreateTagDto = { name: 'important' };
+    const dto: CreateAndUpdateTagDto = { name: 'important' };
     const spy = jest
       .spyOn(dbService.client.tags, 'create')
       .mockResolvedValue(mockTag);
@@ -53,7 +53,7 @@ describe('TagsService', () => {
   });
 
   it('should create tags in batch and return created items', async () => {
-    const dtos: CreateTagDto[] = [{ name: 'a' }, { name: 'b' }];
+    const dtos: CreateAndUpdateTagDto[] = [{ name: 'a' }, { name: 'b' }];
     const batch = { count: 2 };
     const created = [mockTag, { ...mockTag, id: 'tag2', name: 'b' } as any];
 
@@ -74,7 +74,7 @@ describe('TagsService', () => {
   });
 
   it('should throw BadRequestException on validation error', async () => {
-    const dto: CreateTagDto = { name: '' };
+    const dto: CreateAndUpdateTagDto = { name: '' };
     jest.spyOn(dbService.client.tags, 'create').mockRejectedValue(
       new Prisma.PrismaClientKnownRequestError('bad', {
         clientVersion: '1',
@@ -82,7 +82,7 @@ describe('TagsService', () => {
       }),
     );
     await expect(service.createTag(dto, 'userId')).rejects.toThrow(
-      'BadRequestException',
+      'Invalid data provided',
     );
   });
 });

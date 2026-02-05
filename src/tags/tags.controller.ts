@@ -8,7 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { CreateTagDto } from './tags.dto';
+import { CreateAndUpdateTagDto } from './tags.dto';
 import { Session, type UserSession } from '@thallesp/nestjs-better-auth';
 import { TagsService } from './tags.service';
 
@@ -18,7 +18,7 @@ export class TagsController {
 
   @Post()
   async createTag(
-    @Body() body: CreateTagDto | CreateTagDto[],
+    @Body() body: CreateAndUpdateTagDto | CreateAndUpdateTagDto[],
     @Session() session: UserSession,
   ) {
     return await this.tagsService.createTag(body, session.user.id);
@@ -44,7 +44,7 @@ export class TagsController {
   @Put(':id')
   async updateTag(
     @Param('id') tagId: string,
-    @Body() body: Partial<CreateTagDto>,
+    @Body() body: Partial<CreateAndUpdateTagDto>,
     @Session() session: UserSession,
   ) {
     return await this.tagsService.updateTag(tagId, session.user.id, body);
