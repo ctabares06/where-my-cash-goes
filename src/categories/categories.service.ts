@@ -22,7 +22,7 @@ export class CategoriesService {
           data: body.map((category) => ({
             name: category.name,
             unicode: category.unicode,
-            transaction_type: category.transaction_type,
+            transactionType: category.transactionType,
             userId: userId,
           })),
         });
@@ -42,7 +42,7 @@ export class CategoriesService {
         data: {
           name: body.name,
           unicode: body.unicode,
-          transaction_type: body.transaction_type,
+          transactionType: body.transactionType,
           userId: userId,
         },
       });

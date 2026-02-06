@@ -18,7 +18,7 @@ export class CategoriesController {
 
   @Post()
   async createCategory(
-    @Body() body: CreateCategoryDto[] | CreateCategoryDto,
+    @Body() body: CreateCategoryDto,
     @Session() session: UserSession,
   ) {
     const category = await this.categoryService.createCategory(

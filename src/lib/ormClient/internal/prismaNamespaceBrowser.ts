@@ -140,7 +140,7 @@ export const CategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   unicode: 'unicode',
-  transaction_type: 'transaction_type',
+  transactionType: 'transactionType',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -155,7 +155,7 @@ export const TransactionScalarFieldEnum = {
   description: 'description',
   userId: 'userId',
   categoryId: 'categoryId',
-  transaction_type: 'transaction_type',
+  transactionType: 'transactionType',
   createdAt: 'createdAt',
   updateAt: 'updateAt'
 } as const

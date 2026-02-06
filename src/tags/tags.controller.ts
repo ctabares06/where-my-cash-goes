@@ -18,7 +18,7 @@ export class TagsController {
 
   @Post()
   async createTag(
-    @Body() body: CreateAndUpdateTagDto | CreateAndUpdateTagDto[],
+    @Body() body: CreateAndUpdateTagDto,
     @Session() session: UserSession,
   ) {
     return await this.tagsService.createTag(body, session.user.id);

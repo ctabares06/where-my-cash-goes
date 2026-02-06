@@ -10,5 +10,5 @@ export class CreateCategoryDto {
   unicode: string;
 
   @IsEnum(Transaction_T)
-  transaction_type: Transaction_T;
+  transactionType: Transaction_T;
 }

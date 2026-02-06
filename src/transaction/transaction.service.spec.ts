@@ -32,7 +32,7 @@ describe('TransactionService - UT', () => {
       const createTransactionDto = {
         quantity: 100,
         description: 'Test transaction',
-        transaction_type: Transaction_T.income,
+        transactionType: Transaction_T.income,
       };
       const expectedTransaction: Transaction = {
         id: '1',
@@ -65,12 +65,12 @@ describe('TransactionService - UT', () => {
         {
           quantity: 100,
           description: 'Test transaction 1',
-          transaction_type: Transaction_T.income,
+          transactionType: Transaction_T.income,
         },
         {
           quantity: 50,
           description: 'Test transaction 2',
-          transaction_type: Transaction_T.expense,
+          transactionType: Transaction_T.expense,
         },
       ];
 
@@ -130,7 +130,7 @@ describe('TransactionService - UT', () => {
           id: '1',
           quantity: 100,
           description: 'Test transaction 1',
-          transaction_type: Transaction_T.income,
+          transactionType: Transaction_T.income,
           userId: 'userId',
           createdAt: new Date(),
           updateAt: new Date(),
@@ -140,7 +140,7 @@ describe('TransactionService - UT', () => {
           id: '2',
           quantity: 200,
           description: 'Test transaction 2',
-          transaction_type: Transaction_T.expense,
+          transactionType: Transaction_T.expense,
           userId: 'userId',
           createdAt: new Date(),
           updateAt: new Date(),
@@ -182,7 +182,7 @@ describe('TransactionService - UT', () => {
         id: '1',
         quantity: 100,
         description: 'Test transaction',
-        transaction_type: Transaction_T.income,
+        transactionType: Transaction_T.income,
         userId: 'userId',
         createdAt: new Date(),
         updateAt: new Date(),
@@ -234,7 +234,7 @@ describe('TransactionService - UT', () => {
         id: '1',
         quantity: 150,
         description: 'Updated transaction',
-        transaction_type: Transaction_T.income,
+        transactionType: Transaction_T.income,
         userId: 'userId',
         createdAt: new Date(),
         updateAt: new Date(),
@@ -265,7 +265,7 @@ describe('TransactionService - UT', () => {
         userId: 'userId',
         quantity: 100,
         description: 'Test transaction',
-        transaction_type: Transaction_T.income,
+        transactionType: Transaction_T.income,
         createdAt: new Date(),
         updateAt: new Date(),
         categoryId: null,
@@ -274,7 +274,7 @@ describe('TransactionService - UT', () => {
         id: '1',
         quantity: 100,
         description: 'Test transaction',
-        transaction_type: Transaction_T.income,
+        transactionType: Transaction_T.income,
         userId: 'userId',
         createdAt: new Date(),
         updateAt: new Date(),

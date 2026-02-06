@@ -20,7 +20,7 @@ describe('CategoriesService - UT', () => {
     id: 'categoryId',
     name: 'Groceries',
     unicode: '🛒',
-    transaction_type: Transaction_T.expense,
+    transactionType: Transaction_T.expense,
     userId: 'userId',
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -56,7 +56,7 @@ describe('CategoriesService - UT', () => {
       const createCategoryDto: CreateCategoryDto = {
         name: 'Groceries',
         unicode: '🛒',
-        transaction_type: Transaction_T.expense,
+        transactionType: Transaction_T.expense,
       };
 
       const spy = jest
@@ -70,7 +70,7 @@ describe('CategoriesService - UT', () => {
         data: {
           name: 'Groceries',
           unicode: '🛒',
-          transaction_type: Transaction_T.expense,
+          transactionType: Transaction_T.expense,
           userId: 'userId',
         },
       });
@@ -81,17 +81,17 @@ describe('CategoriesService - UT', () => {
         {
           name: 'Groceries',
           unicode: '🛒',
-          transaction_type: Transaction_T.expense,
+          transactionType: Transaction_T.expense,
         },
         {
           name: 'Utilities',
           unicode: '💡',
-          transaction_type: Transaction_T.expense,
+          transactionType: Transaction_T.expense,
         },
         {
           name: 'Salary',
           unicode: '💰',
-          transaction_type: Transaction_T.income,
+          transactionType: Transaction_T.income,
         },
       ];
 
@@ -102,7 +102,7 @@ describe('CategoriesService - UT', () => {
           id: 'c1',
           name: 'Groceries',
           unicode: '🛒',
-          transaction_type: Transaction_T.expense,
+          transactionType: Transaction_T.expense,
           userId: 'userId',
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -111,7 +111,7 @@ describe('CategoriesService - UT', () => {
           id: 'c2',
           name: 'Utilities',
           unicode: '💡',
-          transaction_type: Transaction_T.expense,
+          transactionType: Transaction_T.expense,
           userId: 'userId',
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -120,7 +120,7 @@ describe('CategoriesService - UT', () => {
           id: 'c3',
           name: 'Salary',
           unicode: '💰',
-          transaction_type: Transaction_T.income,
+          transactionType: Transaction_T.income,
           userId: 'userId',
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -147,19 +147,19 @@ describe('CategoriesService - UT', () => {
           {
             name: 'Groceries',
             unicode: '🛒',
-            transaction_type: Transaction_T.expense,
+            transactionType: Transaction_T.expense,
             userId: 'userId',
           },
           {
             name: 'Utilities',
             unicode: '💡',
-            transaction_type: Transaction_T.expense,
+            transactionType: Transaction_T.expense,
             userId: 'userId',
           },
           {
             name: 'Salary',
             unicode: '💰',
-            transaction_type: Transaction_T.income,
+            transactionType: Transaction_T.income,
             userId: 'userId',
           },
         ],
@@ -214,7 +214,7 @@ describe('CategoriesService - UT', () => {
       const createCategoryDto: CreateCategoryDto = {
         name: 'Invalid',
         unicode: '🛒',
-        transaction_type: Transaction_T.expense,
+        transactionType: Transaction_T.expense,
       };
 
       jest.spyOn(dbService.client.category, 'create').mockRejectedValue(
@@ -234,7 +234,7 @@ describe('CategoriesService - UT', () => {
         {
           name: 'Invalid',
           unicode: '🛒',
-          transaction_type: Transaction_T.expense,
+          transactionType: Transaction_T.expense,
         },
       ];
 
@@ -254,7 +254,7 @@ describe('CategoriesService - UT', () => {
       const createCategoryDto: CreateCategoryDto = {
         name: 'Category',
         unicode: '🛒',
-        transaction_type: Transaction_T.expense,
+        transactionType: Transaction_T.expense,
       };
 
       jest
@@ -275,7 +275,7 @@ describe('CategoriesService - UT', () => {
           id: 'categoryId2',
           name: 'Utilities',
           unicode: '💡',
-          transaction_type: Transaction_T.expense,
+          transactionType: Transaction_T.expense,
           userId: 'userId',
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -325,7 +325,7 @@ describe('CategoriesService - UT', () => {
           id: 'categoryId2',
           name: 'Utilities',
           unicode: '💡',
-          transaction_type: Transaction_T.expense,
+          transactionType: Transaction_T.expense,
           userId: 'userId',
           createdAt: new Date(),
           updatedAt: new Date(),

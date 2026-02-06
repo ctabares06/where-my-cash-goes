@@ -19,10 +19,15 @@ export class TransactionService {
       if (Array.isArray(data)) {
         const createdTransactions = await this.db.client.transaction.createMany(
           {
-            data: data.map((transaction) => ({
-              ...transaction,
-              userId,
-            })),
+            data: data.map((transaction) => {
+              if (transaction.categoryId) {
+                delete transaction.transactionType;
+              }
+              return {
+                ...transaction,
+                userId,
+              };
+            }),
           },
         );
 
@@ -33,6 +38,10 @@ export class TransactionService {
           },
           take: createdTransactions.count,
         });
+      }
+
+      if (data.categoryId) {
+        delete data.transactionType;
       }
 
       return this.db.client.transaction.create({

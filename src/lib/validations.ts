@@ -19,7 +19,6 @@ export const IsValidUnicode =
             const matches = value.match(
               /^\p{Extended_Pictographic}(?:\uFE0F|\u200D\p{Extended_Pictographic})*$/u,
             );
-            console.log(value, matches);
             return matches !== null && matches.length > 0;
           }
 
